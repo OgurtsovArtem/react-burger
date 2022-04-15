@@ -1,4 +1,5 @@
 <h1 align="center">React-burger project</h1>
+
 Проектное задание Яндекс Практикума на курсе [React-разработчика](https://practicum.yandex.ru/react/).
 
 Проект создан с ипользованием `CRA(Create-react-app)` + `typeScript`
