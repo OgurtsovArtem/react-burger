@@ -17,11 +17,11 @@
   padding-top: 16px;
   padding-bottom: 16px;
 }
-.subList {
+.sub_list {
   flex: 100%;
   padding-left: 40px;
 }
-.subItem {
+.sub_item {
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400;
@@ -61,7 +61,6 @@
   .list {
     flex-direction: column;
     padding-top: 70px;
-    padding-left: 11px;
   }
   .item {
     font-size: 14px;
