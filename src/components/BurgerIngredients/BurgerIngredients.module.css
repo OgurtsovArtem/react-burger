@@ -1,0 +1,28 @@
+.section {
+}
+.container {
+}
+.tabs {
+  display: flex;
+  justify-content: space-between;
+}
+.tabs div {
+  width: 100%;
+}
+.title {
+}
+.products {
+  height: calc(100vh - (var(--header-height) + 142px));
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.chapter {
+}
+.chapterTitle {
+}
+.chapterList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+  gap: 24px;
+}
