@@ -1,10 +1,10 @@
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1280px;
+.header {
+  max-width: var(--container-max-width);
   margin-left: auto;
   margin-right: auto;
+}
+.container {
+  align-items: center;
 }
 .list {
   display: flex;
@@ -13,15 +13,27 @@
 .item {
   display: flex;
   align-items: center;
-  gap: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
+  color: var(--text-inactive-color);
 }
-.sub_list {
+.item_active {
+  composes: item;
+  color: var(--text-primary-color);
+}
+.subList_active {
   flex: 100%;
   padding-left: 40px;
+  max-height: 100%;
 }
-.sub_item {
+.subList {
+  composes: subList_active;
+  max-height: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+.subItem {
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400;
@@ -29,25 +41,37 @@
   line-height: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+  color: var(--text-inactive-color);
 }
-.item_mobile {
+.itemMobile {
   composes: item;
   flex-wrap: wrap;
+  cursor: pointer;
 }
 .admin {
   composes: item;
+  justify-self: end;
 }
 
 @media (min-width: 1024px) {
-  .item_mobile {
+  .itemMobile {
     display: none;
   }
-  .mobile_logo {
+  .mobileLogo {
     display: none;
+  }
+  .logo {
+    justify-self: center;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 @media (max-width: 1023px) {
   .container {
+    display: flex;
+    justify-content: space-between;
     padding-left: 8px;
     padding-right: 8px;
   }
@@ -57,6 +81,20 @@
     left: 0;
     width: 100%;
     height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: 0.5s ease;
+  }
+  .nav_active {
+    composes: nav;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: translateX(0);
+    z-index: 100;
+    background-color: #1c1c21;
   }
   .list {
     flex-direction: column;
@@ -68,6 +106,9 @@
   }
   .admin {
     display: none;
+  }
+  .mobileLogo {
+    z-index: 1000;
   }
   .logo {
     display: none;

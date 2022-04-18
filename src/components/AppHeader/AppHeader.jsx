@@ -3,6 +3,8 @@ import {
   ListIcon,
   ProfileIcon,
   Logo,
+  ArrowDownIcon,
+  ArrowUpIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import React from "react";
@@ -14,45 +16,71 @@ import appHeaderStyles from "./AppHeader.module.css";
 import mobileLogo from "../../icons/logo_mobile.svg";
 
 function AppHeader() {
-  const [active, setActive] = React.useState(false);
+  const [menuActive, setMenuActive] = React.useState(false);
+  const [listActive, setListActive] = React.useState(false);
 
   const navBarStatus = () => {
-    setActive(!active);
+    setMenuActive(!menuActive);
+  };
+
+  const listStatus = () => {
+    setListActive(!listActive);
   };
 
   return (
     <header className={appHeaderStyles.header}>
-      <div className={`${appHeaderStyles.container} pl-5 pr-5 mt-5 mb-5`}>
-        <img className={appHeaderStyles.mobile_logo} src={mobileLogo} alt="stellar-burgers" />
-        <nav className={appHeaderStyles.nav}>
+      <div className={`${appHeaderStyles.container} pl-5 pr-5 mt-4 mb-4`}>
+        <img className={appHeaderStyles.mobileLogo} src={mobileLogo} alt="stellar-burgers" />
+        <nav className={`${menuActive ? appHeaderStyles.nav_active : appHeaderStyles.nav}`}>
           <ul className={appHeaderStyles.list}>
-            <li className={`${appHeaderStyles.item_mobile}  pl-5 pr-5`}>
-              <ProfileIcon type="primary" />
-              <p className="text text_type_main-default">Личный кабинет</p>
-              <ul className={appHeaderStyles.sub_list}>
-                <li className={appHeaderStyles.sub_item}>Профиль</li>
-                <li className={appHeaderStyles.sub_item}>История заказов</li>
-                <li className={appHeaderStyles.sub_item}>Выход</li>
+            <li className={`${appHeaderStyles.itemMobile}  pl-5 pr-5`} onClick={listStatus}>
+              <ProfileIcon type="secondary" />
+              <p className="text text_type_main-default pl-2">Личный кабинет</p>
+              {listActive ? <ArrowDownIcon type="secondary" /> : <ArrowUpIcon type="secondary" />}
+              <ul className={listActive ? appHeaderStyles.subList : appHeaderStyles.subList_active}>
+                <li className={appHeaderStyles.subItem}>
+                  <a className={appHeaderStyles.Link} href="/">
+                    Профиль
+                  </a>
+                </li>
+                <li className={appHeaderStyles.subItem}>
+                  <a className={appHeaderStyles.Link} href="/">
+                    История заказов
+                  </a>
+                </li>
+                <li className={appHeaderStyles.subItem}>
+                  <a className={appHeaderStyles.Link} href="/">
+                    Выход
+                  </a>
+                </li>
               </ul>
             </li>
-            <li className={`${appHeaderStyles.item}  pl-5 pr-5`}>
+            <li className={`${appHeaderStyles.item_active} pl-5 pr-5`}>
               <BurgerIcon type="primary" />
-              <p className="text text_type_main-default">Конструктор</p>
+              <p className="text text_type_main-default pl-2">
+                <a className={appHeaderStyles.Link} href="/">
+                  Конструктор
+                </a>
+              </p>
             </li>
             <li className={`${appHeaderStyles.item}  pl-5 pr-5`}>
-              <ListIcon type="primary" />
-              <p className="text text_type_main-default">Конструктор</p>
+              <ListIcon type="secondary" />
+              <p className="text text_type_main-default pl-2">
+                <a className={appHeaderStyles.Link} href="/">
+                  Лента заказов
+                </a>
+              </p>
             </li>
           </ul>
         </nav>
         <div className={appHeaderStyles.logo}>
           <Logo />
         </div>
-        <div className={appHeaderStyles.admin}>
-          <ProfileIcon type="primary" />
+        <button className={appHeaderStyles.admin}>
+          <ProfileIcon type="secondary" />
           <p className="text text_type_main-default">Личный кабинет</p>
-        </div>
-        <Burger onClick={navBarStatus} />
+        </button>
+        <Burger onClick={navBarStatus} menuActive={menuActive} />
       </div>
     </header>
   );
