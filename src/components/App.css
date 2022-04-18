@@ -1,0 +1,27 @@
+:root {
+  /* CONTAINER */
+  --header-height: 88px;
+  --container-max-width: 1280px;
+  /* SCROLLBAR */
+  --scrollbarBgColor: var(--background-element);
+  --scrollbarThumbColor: var(--text-inactive-color);
+  --scrollbarWidth: 8px;
+  --scrollbarBorder: 0 solid transparent;
+}
+.custom-scrollbar {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarBgColor);
+}
+/* ширина */
+.custom-scrollbar::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+/* дорожка */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbarBgColor);
+}
+/* Плашка */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumbColor);
+  border: var(--scrollbarBorder);
+}
