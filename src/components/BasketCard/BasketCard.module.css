@@ -1,0 +1,47 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+  background: var(--background);
+  border-radius: 40px;
+}
+.image {
+  max-width: 80px;
+  max-height: 40px;
+}
+.card:first-child .info {
+  border-radius: 88px 88px 40px 40px;
+}
+.card:last-child .info {
+  border-radius: 40px 40px 88px 88px;
+}
+.price {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+@media screen and (max-width: 1035px) {
+  .info {
+    gap: 8px;
+  }
+  .statusButton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .info {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .price {
+    margin-left: initial;
+  }
+}
