@@ -1,6 +1,14 @@
 :root {
-  /* CONTAINER */
+  /* Z-INDEX */
+  --z-index-s: 10;
+  --z-index-m: 100;
+  --z-index-l: 500;
+  --z-index-xl: 1000;
+  --z-index-xxl: 2000;
+  /* HEADER */
   --header-height: 88px;
+  /* CONTAINER */
+
   --container-max-width: 1280px;
   /* SCROLLBAR */
   --scrollbarBgColor: var(--background-element);
