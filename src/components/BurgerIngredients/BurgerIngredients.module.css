@@ -1,7 +1,3 @@
-.section {
-}
-.container {
-}
 .tabs {
   display: flex;
   justify-content: space-between;
@@ -9,20 +5,37 @@
 .tabs div {
   width: 100%;
 }
-.title {
-}
 .products {
-  height: calc(100vh - (var(--header-height) + 142px));
+  height: calc(100vh - (var(--header-height) + 156px));
   overflow-y: auto;
   overflow-x: hidden;
 }
-.chapter {
-}
-.chapterTitle {
-}
 .chapterList {
   display: grid;
+  flex-wrap: wrap;
   grid-template-columns: repeat(2, 1fr);
   text-align: center;
   gap: 24px;
+}
+
+@media screen and (max-width: 1035px) {
+  .tabs div {
+    padding: 16px;
+    min-width: initial;
+  }
+  .products {
+    height: calc(100vh - (var(--header-height) + 213px));
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .tabs {
+    flex-direction: column;
+  }
+  .chapterList {
+    grid-template-columns: 1fr;
+  }
+  .title {
+    font-size: 28px;
+  }
 }
