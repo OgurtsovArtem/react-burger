@@ -29,7 +29,7 @@ function AppHeader() {
 
   return (
     <header className={appHeaderStyles.header}>
-      <div className={`${appHeaderStyles.container} pl-5 pr-5 mt-4 mb-4`}>
+      <div className={`${appHeaderStyles.container} pr-5 mt-4 mb-4`}>
         <img className={appHeaderStyles.mobileLogo} src={mobileLogo} alt="stellar-burgers" />
         <nav className={`${menuActive ? appHeaderStyles.nav_active : appHeaderStyles.nav}`}>
           <ul className={appHeaderStyles.list}>

@@ -15,7 +15,11 @@
   align-items: center;
   padding-top: 16px;
   padding-bottom: 16px;
+
   color: var(--text-inactive-color);
+}
+.item svg {
+  flex-shrink: 0;
 }
 .item_active {
   composes: item;
@@ -108,7 +112,7 @@
     display: none;
   }
   .mobileLogo {
-    z-index: 1000;
+    z-index: var(--z-index-l);
   }
   .logo {
     display: none;
