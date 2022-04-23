@@ -7,17 +7,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import BasketCard from "../BasketCard/BasketCard";
-import PopupOrder from "../PopupOrder/PopupOrder";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import Modal from "../Modal/Modal";
 
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
+import ingredientsPropTypes from "../../utils/types";
 
 function BurgerConstructor({ data }) {
   const [activeBody, setACtiveBody] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
   const [activePopup, setActivePopup] = React.useState(false);
-
   const statusWords = {
-    desctop: "Оформить заказ",
+    desktop: "Оформить заказ",
     mobileClose: "Смотреть заказ",
     mobileOpen: "Заказать",
   };
@@ -46,24 +47,36 @@ function BurgerConstructor({ data }) {
 
   return (
     <>
-      {activePopup && <PopupOrder onClick={changePopupStatus} />}
+      {activePopup && (
+        <Modal onClose={changePopupStatus}>
+          <OrderDetails />
+        </Modal>
+      )}
 
       <div className={`${BurgerConstructorStyle.basket} `}>
         <div
           className={`${
-            activeBody ? BurgerConstructorStyle.body_active : BurgerConstructorStyle.body
-          } pl-4 pr-4 mt-25 custom-scrollbar`}
+            activeBody ? BurgerConstructorStyle.wrapper_active : BurgerConstructorStyle.wrapper
+          } mt-25`}
         >
           <div className={`${BurgerConstructorStyle.header} pt-4 pb-4 pl-2 pr-2`}>
             <h2 className={`${BurgerConstructorStyle.title} text text_type_main-medium`}>Заказ</h2>
             <button onClick={activeBody ? changeBodyStatus : null}>
-              {" "}
               <CloseIcon type="primary" />
             </button>
           </div>
-          {data.map((object) => (
-            <BasketCard key={object._id} {...object} />
-          ))}
+          <BasketCard key={data[0]._id} data={data[0]} isLocked={true} type="top" />
+          <div className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
+            {data.slice(1, -1).map((object) => (
+              <BasketCard key={object._id} data={object} isLocked={false} type="middle" />
+            ))}
+          </div>
+          <BasketCard
+            key={data[data.length - 1]._id}
+            data={data[data.length - 1]}
+            isLocked={true}
+            type="bottom"
+          />
         </div>
         <div className={`${BurgerConstructorStyle.footer} pt-10 pl-4 pr-4`}>
           <div className={`${BurgerConstructorStyle.totalPrice} mr-10`}>
@@ -83,7 +96,7 @@ function BurgerConstructor({ data }) {
               ? activeBody
                 ? statusWords.mobileOpen
                 : statusWords.mobileClose
-              : statusWords.desctop}
+              : statusWords.desktop}
           </Button>
         </div>
       </div>
@@ -92,21 +105,7 @@ function BurgerConstructor({ data }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number,
-      type: PropTypes.string.isRequired,
-      _id: PropTypes.string.isRequired,
-    })
-  ),
+  data: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
 };
 
 export default BurgerConstructor;

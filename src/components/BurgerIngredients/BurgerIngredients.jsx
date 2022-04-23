@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import IngredientsCard from "../IngredientsCard/IngredientsCard";
+import ingredientsPropTypes from "../../utils/types";
 
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("one");
@@ -25,13 +25,13 @@ function BurgerIngredients({ data }) {
         </Tab>
       </div>
 
-      <div className={`${BurgerIngredientsStyle.products} custom-scrollbar`}>
+      <div className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}>
         <div className={`${BurgerIngredientsStyle.chapter}`}>
-          <h2 className={`text text_type_main-medium mt-10 mb-6`}>Булки</h2>
+          <h2 className={`text text_type_main-medium  mb-6`}>Булки</h2>
           <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
             {data.map((object) => {
               return object.type === "bun" ? (
-                <IngredientsCard key={object._id} {...object} />
+                <IngredientsCard key={object._id} data={object} />
               ) : null;
             })}
           </div>
@@ -43,7 +43,7 @@ function BurgerIngredients({ data }) {
           <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
             {data.map((object) => {
               return object.type === "sauce" ? (
-                <IngredientsCard key={object._id} {...object} />
+                <IngredientsCard key={object._id} data={object} />
               ) : null;
             })}
           </div>
@@ -55,7 +55,7 @@ function BurgerIngredients({ data }) {
           <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2 mb-6`}>
             {data.map((object) => {
               return object.type === "main" ? (
-                <IngredientsCard key={object._id} {...object} />
+                <IngredientsCard key={object._id} data={object} />
               ) : null;
             })}
           </div>
@@ -64,23 +64,8 @@ function BurgerIngredients({ data }) {
     </div>
   );
 }
-
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number,
-      type: PropTypes.string.isRequired,
-      _id: PropTypes.string.isRequired,
-    })
-  ),
+  data: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
 };
 
 export default BurgerIngredients;

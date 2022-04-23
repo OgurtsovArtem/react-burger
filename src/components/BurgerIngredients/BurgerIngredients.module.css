@@ -6,7 +6,7 @@
   width: 100%;
 }
 .products {
-  height: calc(100vh - (var(--header-height) + 156px));
+  height: calc(100vh - (var(--header-height) + 196px));
   overflow-y: auto;
   overflow-x: hidden;
 }
