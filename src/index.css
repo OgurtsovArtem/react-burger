@@ -10,6 +10,42 @@
   --media-desktop-l: 1559px;
   --media-desktop-xl: 1919px; */
 
+:root {
+  /* Z-INDEX */
+  --z-index-s: 10;
+  --z-index-m: 100;
+  --z-index-l: 500;
+  --z-index-xl: 1000;
+  --z-index-xxl: 2000;
+  /* HEADER */
+  --header-height: 88px;
+  /* CONTAINER */
+
+  --container-max-width: 1280px;
+  /* SCROLLBAR */
+  --scrollbarBgColor: var(--background-element);
+  --scrollbarThumbColor: var(--text-inactive-color);
+  --scrollbarWidth: 8px;
+  --scrollbarBorder: 0 solid transparent;
+}
+.custom-scrollbar {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarBgColor);
+}
+/* ширина */
+.custom-scrollbar::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+/* дорожка */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbarBgColor);
+}
+/* Плашка */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumbColor);
+  border: var(--scrollbarBorder);
+}
+
 *,
 *::after,
 *::before {
@@ -63,12 +99,14 @@ button {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
