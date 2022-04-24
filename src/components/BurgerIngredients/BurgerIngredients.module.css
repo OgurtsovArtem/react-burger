@@ -24,7 +24,7 @@
     min-width: initial;
   }
   .products {
-    height: calc(100vh - (var(--header-height) + 213px));
+    height: calc(100vh - (var(--header-height) + 253px));
   }
 }
 
