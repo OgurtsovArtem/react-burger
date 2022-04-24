@@ -13,16 +13,16 @@ import Modal from "../Modal/Modal";
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import ingredientsPropTypes from "../../utils/types";
 
+const BUTTON_STATUS_NAME = {
+  desktop: "Оформить заказ",
+  mobileClose: "Смотреть заказ",
+  mobileOpen: "Заказать",
+};
+
 function BurgerConstructor({ data }) {
   const [activeBody, setACtiveBody] = React.useState(false);
-  const [mobile, setMobile] = React.useState(false);
+  const [mobile, setMobile] = React.useState(window.matchMedia("(max-width: 1035px)").matches);
   const [activePopup, setActivePopup] = React.useState(false);
-  const statusWords = {
-    desktop: "Оформить заказ",
-    mobileClose: "Смотреть заказ",
-    mobileOpen: "Заказать",
-  };
-
   const changeBodyStatus = () => {
     setACtiveBody(!activeBody);
   };
@@ -40,10 +40,6 @@ function BurgerConstructor({ data }) {
       window.removeEventListener("resize", changeStatus);
     };
   });
-
-  React.useEffect(() => {
-    setMobile(window.matchMedia("(max-width: 1035px)").matches);
-  }, []);
 
   return (
     <>
@@ -65,18 +61,14 @@ function BurgerConstructor({ data }) {
               <CloseIcon type="primary" />
             </button>
           </div>
-          <BasketCard key={data[0]._id} data={data[0]} isLocked={true} type="top" />
+          <BasketCard data={data[0]} isLocked={true} type="top" />
+
           <div className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
-            {data.slice(1, -1).map((object) => (
+            {data.slice(2, -1).map((object) => (
               <BasketCard key={object._id} data={object} isLocked={false} type="middle" />
             ))}
           </div>
-          <BasketCard
-            key={data[data.length - 1]._id}
-            data={data[data.length - 1]}
-            isLocked={true}
-            type="bottom"
-          />
+          <BasketCard data={data[1]} isLocked={true} type="bottom" />
         </div>
         <div className={`${BurgerConstructorStyle.footer} pt-10 pl-4 pr-4`}>
           <div className={`${BurgerConstructorStyle.totalPrice} mr-10`}>
@@ -94,9 +86,9 @@ function BurgerConstructor({ data }) {
           >
             {mobile
               ? activeBody
-                ? statusWords.mobileOpen
-                : statusWords.mobileClose
-              : statusWords.desktop}
+                ? BUTTON_STATUS_NAME.mobileOpen
+                : BUTTON_STATUS_NAME.mobileClose
+              : BUTTON_STATUS_NAME.desktop}
           </Button>
         </div>
       </div>
@@ -105,7 +97,7 @@ function BurgerConstructor({ data }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
+  data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
 };
 
 export default BurgerConstructor;
