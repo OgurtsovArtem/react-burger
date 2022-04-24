@@ -39,37 +39,33 @@ function AppHeader() {
               {listActive ? <ArrowDownIcon type="secondary" /> : <ArrowUpIcon type="secondary" />}
               <ul className={listActive ? appHeaderStyles.subList : appHeaderStyles.subList_active}>
                 <li className={appHeaderStyles.subItem}>
-                  <a className={appHeaderStyles.Link} href="/">
+                  <a className={appHeaderStyles.link} href="/">
                     Профиль
                   </a>
                 </li>
                 <li className={appHeaderStyles.subItem}>
-                  <a className={appHeaderStyles.Link} href="/">
+                  <a className={appHeaderStyles.link} href="/">
                     История заказов
                   </a>
                 </li>
                 <li className={appHeaderStyles.subItem}>
-                  <a className={appHeaderStyles.Link} href="/">
+                  <a className={appHeaderStyles.link} href="/">
                     Выход
                   </a>
                 </li>
               </ul>
             </li>
             <li className={`${appHeaderStyles.item_active} pl-5 pr-5`}>
-              <BurgerIcon type="primary" />
-              <p className="text text_type_main-default pl-2">
-                <a className={appHeaderStyles.Link} href="/">
-                  Конструктор
-                </a>
-              </p>
+              <a className={appHeaderStyles.link} href="/">
+                <BurgerIcon type="primary" />
+                <p className="text text_type_main-default pl-2">Конструктор</p>
+              </a>
             </li>
             <li className={`${appHeaderStyles.item}  pl-5 pr-5`}>
-              <ListIcon type="secondary" />
-              <p className="text text_type_main-default pl-2">
-                <a className={appHeaderStyles.Link} href="/">
-                  Лента заказов
-                </a>
-              </p>
+              <a className={appHeaderStyles.link} href="/">
+                <ListIcon type="secondary" />
+                <p className="text text_type_main-default pl-2">Лента заказов</p>
+              </a>
             </li>
           </ul>
         </nav>
