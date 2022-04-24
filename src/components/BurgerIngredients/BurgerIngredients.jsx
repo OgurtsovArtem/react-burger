@@ -7,6 +7,24 @@ import ingredientsPropTypes from "../../utils/types";
 
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("one");
+  const filteredArray = {
+    main: [],
+    bun: [],
+    sauce: [],
+  };
+  data.map((object) => {
+    if (object.type === "main") {
+      filteredArray.main.push(object);
+    }
+    if (object.type === "sauce") {
+      filteredArray.sauce.push(object);
+    }
+    if (object.type === "bun") {
+      filteredArray.bun.push(object);
+    }
+    return object;
+  });
+
   return (
     <div>
       <h1 className={`${BurgerIngredientsStyle.title} text text_type_main-large pt-5 pb-5 mt-5`}>
@@ -29,10 +47,8 @@ function BurgerIngredients({ data }) {
         <div className={`${BurgerIngredientsStyle.chapter}`}>
           <h2 className={`text text_type_main-medium  mb-6`}>Булки</h2>
           <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
-            {data.map((object) => {
-              return object.type === "bun" ? (
-                <IngredientsCard key={object._id} data={object} />
-              ) : null;
+            {filteredArray.bun.map((object) => {
+              return <IngredientsCard key={object._id} data={object} />;
             })}
           </div>
           <h2
@@ -41,10 +57,8 @@ function BurgerIngredients({ data }) {
             Соусы
           </h2>
           <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
-            {data.map((object) => {
-              return object.type === "sauce" ? (
-                <IngredientsCard key={object._id} data={object} />
-              ) : null;
+            {filteredArray.sauce.map((object) => {
+              return <IngredientsCard key={object._id} data={object} />;
             })}
           </div>
           <h2
@@ -53,10 +67,8 @@ function BurgerIngredients({ data }) {
             Основа
           </h2>
           <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2 mb-6`}>
-            {data.map((object) => {
-              return object.type === "main" ? (
-                <IngredientsCard key={object._id} data={object} />
-              ) : null;
+            {filteredArray.main.map((object) => {
+              return <IngredientsCard key={object._id} data={object} />;
             })}
           </div>
         </div>
@@ -65,7 +77,7 @@ function BurgerIngredients({ data }) {
   );
 }
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
+  data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
 };
 
 export default BurgerIngredients;

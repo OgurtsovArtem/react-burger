@@ -34,7 +34,7 @@ function IngredientsCard({ data }) {
           <span className={`text text_type_digits-default  mr-1`}>{data.price}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <h3 className={`'text text_type_main-default'`}>{data.name}</h3>
+        <h3 className="text text_type_main-default">{data.name}</h3>
       </div>
     </>
   );

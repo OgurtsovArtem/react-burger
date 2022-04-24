@@ -10,12 +10,15 @@ const modalRoot = document.getElementById("modal-root");
 function Modal({ onClose, children, header }) {
   useEffect(() => {
     const escape = (event) => {
-      return event.code === "Escape" ? onClose() : null;
+      if (event.code === "Escape") {
+        onClose();
+      }
     };
 
     document.addEventListener("keydown", escape);
     return () => document.removeEventListener("keydown", escape);
   }, [onClose]);
+
   return ReactDOM.createPortal(
     <>
       <div className={`${ModalStyle.modal}  pt-10 pl-10 pr-10 pb-10`}>
