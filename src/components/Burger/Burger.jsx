@@ -12,8 +12,8 @@ function Burger({ onClick, menuActive }) {
   );
 }
 Burger.propTypes = {
-  onClick: PropTypes.func,
-  menuActive: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  menuActive: PropTypes.bool.isRequired,
 };
 
 export default Burger;
