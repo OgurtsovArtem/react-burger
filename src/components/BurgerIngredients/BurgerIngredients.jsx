@@ -7,23 +7,31 @@ import ingredientsPropTypes from "../../utils/types";
 
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("one");
-  const filteredArray = {
-    main: [],
-    bun: [],
-    sauce: [],
-  };
-  data.map((object) => {
-    if (object.type === "main") {
-      filteredArray.main.push(object);
-    }
-    if (object.type === "sauce") {
-      filteredArray.sauce.push(object);
-    }
-    if (object.type === "bun") {
-      filteredArray.bun.push(object);
-    }
-    return object;
-  });
+
+  const filteredArray = React.useMemo(() => {
+    const main = [];
+    const bun = [];
+    const sauce = [];
+
+    data.map((object) => {
+      if (object.type === "main") {
+        main.push(object);
+      }
+      if (object.type === "sauce") {
+        sauce.push(object);
+      }
+      if (object.type === "bun") {
+        bun.push(object);
+      }
+      return object;
+    });
+
+    return {
+      main: main,
+      bun: bun,
+      sauce: sauce,
+    };
+  }, [data]);
 
   return (
     <div>
