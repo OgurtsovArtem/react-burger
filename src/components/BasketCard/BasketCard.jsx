@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 import {
   DeleteIcon,
@@ -6,7 +5,9 @@ import {
   DragIcon,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import BasketCardStyle from "./BasketCard.module.css";
+import ingredientsPropTypes from "../../utils/types";
 
 function BasketCard({ isLocked, data, type }) {
   const { name, image_mobile, price, handleClose } = data;
@@ -53,5 +54,11 @@ function BasketCard({ isLocked, data, type }) {
     </div>
   );
 }
+
+BasketCard.propTypes = {
+  isLocked: PropTypes.bool.isRequired,
+  data: ingredientsPropTypes.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default BasketCard;
