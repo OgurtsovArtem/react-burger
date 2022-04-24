@@ -1,3 +1,4 @@
+import React from "react";
 import clsx from "clsx";
 import {
   DeleteIcon,
@@ -9,12 +10,22 @@ import BasketCardStyle from "./BasketCard.module.css";
 
 function BasketCard({ isLocked, data, type }) {
   const { name, image_mobile, price, handleClose } = data;
-
   const className = clsx(BasketCardStyle.info, {
     [BasketCardStyle.info_top]: type === "top",
     [BasketCardStyle.info_middle]: type === "middle",
     [BasketCardStyle.info_bottom]: type === "bottom",
   });
+
+  let text = null;
+  if (type === "top") {
+    text = `${name} (верх)`;
+  }
+  if (type === "bottom") {
+    text = `${name} (низ)`;
+  }
+  if (type === "middle") {
+    text = name;
+  }
 
   return (
     <div className={`${BasketCardStyle.card} mb-4 mr-2`}>
@@ -26,7 +37,7 @@ function BasketCard({ isLocked, data, type }) {
 
       <div className={`${className} pt-4 pb-4 pl-6 pr-8`}>
         <img className={BasketCardStyle.image} src={image_mobile} alt={name} />
-        <p className={`${BasketCardStyle.name} text text_type_main-default`}>{name}</p>
+        <p className={`${BasketCardStyle.name} text text_type_main-default`}>{text}</p>
         <div className={BasketCardStyle.price}>
           <span className={`${BasketCardStyle.value} text text_type_digits-default`}>{price}</span>
           <CurrencyIcon type="primary" />
