@@ -1,38 +1,13 @@
-import React from "react";
+import PropTypes from "prop-types";
+import ingredientsPropTypes from "../../utils/types";
+
 import BurgerBodyStyle from "./BurgerBody.module.css";
 
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Loader from "../Loader/Loader";
 
-const DATA_URL = "https://norma.nomoreparties.space/api/ingredients";
-
-function BurgerBody() {
-  const [state, setState] = React.useState({
-    success: false,
-    data: [],
-  });
-
-  const getData = () => {
-    fetch(DATA_URL)
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setState({ ...state, data: data.data, success: true });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  React.useEffect(() => {
-    getData();
-  }, []);
-
+function BurgerBody({ state }) {
   return (
     <section className={BurgerBodyStyle.section}>
       {state.success ? (
@@ -46,5 +21,12 @@ function BurgerBody() {
     </section>
   );
 }
+
+BurgerBody.propTypes = {
+  state: PropTypes.shape({
+    success: PropTypes.bool.isRequired,
+    data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+  }).isRequired,
+};
 
 export default BurgerBody;
