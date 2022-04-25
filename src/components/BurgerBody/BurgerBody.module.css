@@ -1,0 +1,17 @@
+.section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: var(--container-max-width);
+  gap: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  position: relative;
+}
+
+@media screen and (max-width: 1035px) {
+  .section {
+    grid-template-columns: 1fr;
+    padding-left: 8px;
+  }
+}

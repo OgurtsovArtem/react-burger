@@ -1,0 +1,41 @@
+.tabs {
+  display: flex;
+  justify-content: space-between;
+}
+.tabs div {
+  width: 100%;
+}
+.products {
+  height: calc(100vh - (var(--header-height) + 196px));
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.chapterList {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+  gap: 24px;
+}
+
+@media screen and (max-width: 1035px) {
+  .tabs div {
+    padding: 16px;
+    min-width: initial;
+  }
+  .products {
+    height: calc(100vh - (var(--header-height) + 253px));
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .tabs {
+    flex-direction: column;
+  }
+  .chapterList {
+    grid-template-columns: 1fr;
+  }
+  .title {
+    font-size: 28px;
+  }
+}

@@ -9,10 +9,15 @@
 - [x] Спринт 1
   - [x] Инициализировать новый CRA-проект
   - [x] Настроить удалённый и локальный репозитории
-  - [ ] Верстка компонентов
-    - [ ] AppHeader
-    - [ ] BurgerIngredients
-    - [ ] BurgerConstructor
+  - [x] Верстка компонентов
+    - [x] AppHeader
+    - [x] BurgerIngredients
+    - [x] BurgerConstructor
+    - [x] Modal
+    - [x] ModalOverlay
+    - [x] OrderDetails
+    - [x] IngredientDetails
+  - [x] Адаптив
 - [ ] Спринт 2
   - ...
 - [ ] Спринт 3

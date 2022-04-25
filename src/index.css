@@ -1,13 +1,112 @@
 @import url("./fonts/fonts");
 
+/* --media-mobile-s: 359px;
+  --media-mobile-m: 413px;
+  --media-mobile-l: 539px;
+  --media-tablet-s: 767px;
+  --media-tablet-m: 1035px;
+  --media-desktop-s: 1279px;
+  --media-desktop-m: 1439px;
+  --media-desktop-l: 1559px;
+  --media-desktop-xl: 1919px; */
+
+:root {
+  /* Z-INDEX */
+  --z-index-s: 10;
+  --z-index-m: 100;
+  --z-index-l: 500;
+  --z-index-xl: 1000;
+  --z-index-xxl: 2000;
+  /* HEADER */
+  --header-height: 88px;
+  /* CONTAINER */
+
+  --container-max-width: 1280px;
+  /* SCROLLBAR */
+  --scrollbarBgColor: var(--background-element);
+  --scrollbarThumbColor: var(--text-inactive-color);
+  --scrollbarWidth: 8px;
+  --scrollbarBorder: 0 solid transparent;
+}
+.custom-scrollbar {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarBgColor);
+}
+/* ширина */
+.custom-scrollbar::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+/* дорожка */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbarBgColor);
+}
+/* Плашка */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumbColor);
+  border: var(--scrollbarBorder);
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+input,
+textarea {
+  outline: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
