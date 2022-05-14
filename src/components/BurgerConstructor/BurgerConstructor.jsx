@@ -4,14 +4,14 @@ import {
   CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import PropTypes from "prop-types";
-
+import { useSelector, useDispatch } from "react-redux";
+import { ADD_ITEM, INCREASE_ITEM, ADD_BUN } from "../../services/actions/ingredients";
 import BasketCard from "../BasketCard/BasketCard";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
 
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
-import ingredientsPropTypes from "../../utils/types";
+import { useDrop } from "react-dnd";
 
 const BUTTON_STATUS_NAME = {
   desktop: "Оформить заказ",
@@ -19,12 +19,38 @@ const BUTTON_STATUS_NAME = {
   mobileOpen: "Заказать",
 };
 
-function BurgerConstructor({ data }) {
-  const [activeBody, setACtiveBody] = React.useState(false);
+function BurgerConstructor() {
+  const [activeBody, setActiveBody] = React.useState(false);
+  const [count, setCount] = React.useState(0);
   const [mobile, setMobile] = React.useState(window.matchMedia("(max-width: 1035px)").matches);
   const [activePopup, setActivePopup] = React.useState(false);
+  const { addedIngredients, bun } = useSelector((store) => store.ingredients);
+  const ingredientsPrice = addedIngredients.reduce((acc, item) => acc + item.price, 0);
+  const bunPrice = bun.reduce((acc, item) => acc + item.price, 0);
+  const totalPrice = ingredientsPrice + bunPrice;
+  const dispatch = useDispatch();
+  const addItem = (item) => {
+    setCount((prevCount) => prevCount + 1);
+    dispatch({ type: ADD_ITEM, id: item.id, index: count });
+    dispatch({ type: INCREASE_ITEM, id: item.id });
+  };
+  const addBun = (item) => {
+    dispatch({ type: ADD_BUN, id: item.id });
+  };
+
+  const [, drop] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      const type = item.type;
+      type === "bun" ? addBun(item) : addItem(item);
+    },
+  });
+
   const changeBodyStatus = () => {
-    setACtiveBody(!activeBody);
+    setActiveBody(!activeBody);
   };
 
   const changePopupStatus = () => {
@@ -61,19 +87,19 @@ function BurgerConstructor({ data }) {
               <CloseIcon type="primary" />
             </button>
           </div>
-          <BasketCard data={data[0]} isLocked={true} type="top" />
+          {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="top" /> : null}
 
-          <div className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
-            {data.slice(2, -1).map((object) => (
-              <BasketCard key={object._id} data={object} isLocked={false} type="middle" />
+          <div ref={drop} className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
+            {addedIngredients.map((object, index) => (
+              <BasketCard key={index} data={object} isLocked={false} type="middle" index={index} />
             ))}
           </div>
-          <BasketCard data={data[1]} isLocked={true} type="bottom" />
+          {bun[1] ? <BasketCard data={bun[1]} isLocked={true} type="bottom" /> : null}
         </div>
         <div className={`${BurgerConstructorStyle.footer} pt-10 pl-4 pr-4`}>
           <div className={`${BurgerConstructorStyle.totalPrice} mr-10`}>
             <span className={`${BurgerConstructorStyle.totalValue} text text_type_digits-medium`}>
-              610
+              {totalPrice ? totalPrice : 0}
             </span>
             <CurrencyIcon type="primary" />
           </div>
@@ -95,9 +121,5 @@ function BurgerConstructor({ data }) {
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-};
 
 export default BurgerConstructor;

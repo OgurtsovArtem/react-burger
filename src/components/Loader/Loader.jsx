@@ -1,7 +1,25 @@
-import LoaderStyle from "./Loader.module.css";
+import PropTypes from "prop-types";
+import style from "./Loader.module.css";
+import { LoaderSvg } from "./loader.svg";
 
-function Loader() {
-  return <h2 className={`${LoaderStyle.loader} text text_type_digits-medium`}>Loading...</h2>;
-}
+const loaderSizes = {
+  small: 16,
+  medium: 24,
+  large: 40,
+};
 
-export default Loader;
+export const Loader = ({ size, inverse = false }) => {
+  const loaderColor = inverse ? "#fff" : "#3C39EC";
+
+  const wrapperStyleKey = "wrapper_" + size;
+  return (
+    <div className={style[wrapperStyleKey]}>
+      <LoaderSvg color={loaderColor} size={loaderSizes[size]} />
+    </div>
+  );
+};
+
+Loader.propTypes = {
+  size: PropTypes.string.isRequired,
+  inverse: PropTypes.bool,
+};
