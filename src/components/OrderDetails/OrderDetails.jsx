@@ -1,16 +1,21 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getOrder } from "../../services/actions/constructor";
+import { CLEAR_ORDER, getOrder } from "../../services/actions/constructor";
 import { Loader } from "../Loader/Loader";
 import icon from "../../icons/done_popup.svg";
 import OrderDetailsStyle from "./OrderDetails.module.css";
 
-function OrderDetails() {
+function OrderDetails({ popupStatus }) {
   const { orderStatus, orderLoader } = useSelector((state) => state.constructorBurger);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getOrder());
-  }, [dispatch]);
+    if (popupStatus) {
+      dispatch(getOrder());
+    }
+    return () => {
+      dispatch({ type: CLEAR_ORDER });
+    };
+  }, [popupStatus, dispatch]);
 
   return (
     <>
