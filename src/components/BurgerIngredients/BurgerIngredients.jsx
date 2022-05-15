@@ -1,3 +1,4 @@
+import { InView } from "react-intersection-observer";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -15,21 +16,6 @@ function BurgerIngredients() {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-
-  const scroll = (e) => {
-    if (tabsRef.current) {
-      const scrollTo = tabsRef.current.querySelectorAll("[data-scroll-to]");
-      const topContainer = tabsRef.current.getBoundingClientRect().top;
-
-      scrollTo.forEach((element) => {
-        const topItem = element.getBoundingClientRect().top;
-        if (topItem - topContainer < topContainer) {
-          const visible = element.getAttribute("data-scroll-to");
-          setCurrent(visible);
-        }
-      });
-    }
-  };
 
   const filteredArray = React.useMemo(() => {
     const main = [];
@@ -62,17 +48,17 @@ function BurgerIngredients() {
       </h1>
 
       <div className={BurgerIngredientsStyle.tabs}>
-        <div data-scroll-from="bun">
+        <div>
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
           </Tab>
         </div>
-        <div data-scroll-from="sauce">
+        <div>
           <Tab value="two" active={current === "two"} onClick={setCurrent}>
             Соусы
           </Tab>
         </div>
-        <div data-scroll-from="main">
+        <div>
           <Tab value="three" active={current === "three"} onClick={setCurrent}>
             Начинки
           </Tab>
@@ -81,42 +67,63 @@ function BurgerIngredients() {
       {allIngredientsRequest ? (
         <Loader size="large" />
       ) : (
-        <div
-          ref={tabsRef}
-          onWheel={scroll}
-          className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}
-        >
+        <div ref={tabsRef} className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}>
           <div className={`${BurgerIngredientsStyle.chapter}`}>
-            <h2 className={`text text_type_main-medium  mb-6`} data-scroll-to="one">
-              Булки
-            </h2>
-            <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
-              {filteredArray.bun.map((object) => {
-                return <IngredientsCard key={object._id} data={object} />;
-              })}
-            </div>
-            <h2
-              className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
-              data-scroll-to="two"
+            <InView
+              as="div"
+              onChange={(inView, entry) => {
+                if (inView) {
+                  setCurrent("one");
+                }
+              }}
             >
-              Соусы
-            </h2>
-            <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
-              {filteredArray.sauce.map((object) => {
-                return <IngredientsCard key={object._id} data={object} />;
-              })}
-            </div>
-            <h2
-              className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
-              data-scroll-to="three"
+              <h2 className={`text text_type_main-medium  mb-6`}>Булки</h2>
+              <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
+                {filteredArray.bun.map((object) => {
+                  return <IngredientsCard key={object._id} data={object} />;
+                })}
+              </div>
+            </InView>
+            <InView
+              as="div"
+              onChange={(inView, entry) => {
+                if (inView) {
+                  setCurrent("two");
+                }
+              }}
             >
-              Основа
-            </h2>
-            <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2 mb-6`}>
-              {filteredArray.main.map((object) => {
-                return <IngredientsCard key={object._id} data={object} />;
-              })}
-            </div>
+              <h2
+                className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
+              >
+                Соусы
+              </h2>
+              <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
+                {filteredArray.sauce.map((object) => {
+                  return <IngredientsCard key={object._id} data={object} />;
+                })}
+              </div>
+            </InView>
+
+            <InView
+              as="div"
+              rootMargin="100px"
+              onChange={(inView, entry) => {
+                if (inView) {
+                  setCurrent("three");
+                }
+              }}
+            >
+              <h2
+                className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
+              >
+                Основа
+              </h2>
+              <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2 mb-6`}>
+                {filteredArray.main.map((object) => {
+                  return <IngredientsCard key={object._id} data={object} />;
+                })}
+              </div>
+            </InView>
           </div>
         </div>
       )}
