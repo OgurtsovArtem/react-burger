@@ -2,6 +2,7 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
+  CLEAR_ORDER
 } from '../actions/constructor';
 
 const initialState = {
@@ -36,7 +37,13 @@ switch (action.type) {
         orderLoader: false,
       };
     }
-    
+    case CLEAR_ORDER: {
+      return { 
+        ...state, 
+        orderStatus: {}, 
+        orderLoader: true,
+      };
+    }
     default: {
         return state
     }

@@ -19,7 +19,6 @@ const initialState = {
 
   addedIngredients: [],
   detailIngredients: null,
-  currentIngredient: null,
   bun: [],
 }
 
@@ -88,7 +87,7 @@ switch (action.type) {
       ...state,
       addedIngredients: [...state.addedIngredients, ...state.allIngredients.map(item => {
         if (item._id === action.id) {
-         return {...item, order: action.index, uniqId: Math.random().toString(16).slice(2)}
+         return {...item, order: action.index, uniqId: action.uniqId}
         }
         return false
       }).filter(item => item !== false)],
@@ -110,18 +109,10 @@ switch (action.type) {
   } 
 
   case ADD_BUN: {
-    if (state.bun.length < 2) {
-      return {
-        ...state,
-        bun: [...state.bun, ...state.allIngredients.filter(item => item._id === action.id)],
-      };
-    }
-    else {
-      return {
-        ...state,
-        bun: [...state.allIngredients.filter(item => item._id === action.id)],
-      };
-    }
+    return {
+      ...state,
+      bun: [...state.allIngredients.filter(item => item._id === action.id)],
+    };
   }
     default: {
         return state
