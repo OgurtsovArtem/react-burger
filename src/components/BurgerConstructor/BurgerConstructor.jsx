@@ -26,12 +26,17 @@ function BurgerConstructor() {
   const [activePopup, setActivePopup] = React.useState(false);
   const { addedIngredients, bun } = useSelector((store) => store.ingredients);
   const ingredientsPrice = addedIngredients.reduce((acc, item) => acc + item.price, 0);
-  const bunPrice = bun.reduce((acc, item) => acc + item.price, 0);
+  const bunPrice = bun.reduce((acc, item) => acc + item.price * 2, 0);
   const totalPrice = ingredientsPrice + bunPrice;
   const dispatch = useDispatch();
   const addItem = (item) => {
     setCount((prevCount) => prevCount + 1);
-    dispatch({ type: ADD_ITEM, id: item.id, index: count });
+    dispatch({
+      type: ADD_ITEM,
+      id: item.id,
+      index: count,
+      uniqId: Math.random().toString(16).slice(2),
+    });
     dispatch({ type: INCREASE_ITEM, id: item.id });
   };
   const addBun = (item) => {
@@ -71,7 +76,7 @@ function BurgerConstructor() {
     <>
       {activePopup && (
         <Modal onClose={changePopupStatus}>
-          <OrderDetails />
+          <OrderDetails popupStatus={activePopup} />
         </Modal>
       )}
 
@@ -94,7 +99,7 @@ function BurgerConstructor() {
               <BasketCard key={index} data={object} isLocked={false} type="middle" index={index} />
             ))}
           </div>
-          {bun[1] ? <BasketCard data={bun[1]} isLocked={true} type="bottom" /> : null}
+          {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="bottom" /> : null}
         </div>
         <div className={`${BurgerConstructorStyle.footer} pt-10 pl-4 pr-4`}>
           <div className={`${BurgerConstructorStyle.totalPrice} mr-10`}>
@@ -106,6 +111,7 @@ function BurgerConstructor() {
           <Button
             type="primary"
             size="medium"
+            disabled={!totalPrice}
             onClick={
               mobile ? (!activeBody ? changeBodyStatus : changePopupStatus) : changePopupStatus
             }
