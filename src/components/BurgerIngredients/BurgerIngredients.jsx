@@ -1,4 +1,3 @@
-import { InView } from "react-intersection-observer";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -16,6 +15,26 @@ function BurgerIngredients() {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  const scroll = (e) => {
+    if (tabsRef.current) {
+      const scrollTo = tabsRef.current.querySelectorAll("[data-scroll-to]");
+      const errorValue = 150;
+      const topContainer = tabsRef.current.getBoundingClientRect().top + errorValue;
+      const bottomContainer = tabsRef.current.getBoundingClientRect().bottom + errorValue;
+
+      scrollTo.forEach((element) => {
+        const topItem = element.getBoundingClientRect().top - topContainer;
+        const bottomItem = element.getBoundingClientRect().bottom - bottomContainer;
+        console.log("top", topItem, "bottom", bottomItem);
+        if (topItem < 0 && bottomItem < bottomContainer) {
+          const visible = element.getAttribute("data-scroll-to");
+          console.log(visible);
+          setCurrent(visible);
+        }
+      });
+    }
+  };
 
   const filteredArray = React.useMemo(() => {
     const main = [];
@@ -67,31 +86,21 @@ function BurgerIngredients() {
       {allIngredientsRequest ? (
         <Loader size="large" />
       ) : (
-        <div ref={tabsRef} className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}>
+        <div
+          ref={tabsRef}
+          onWheel={scroll}
+          className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}
+        >
           <div className={`${BurgerIngredientsStyle.chapter}`}>
-            <InView
-              as="div"
-              onChange={(inView, entry) => {
-                if (inView) {
-                  setCurrent("one");
-                }
-              }}
-            >
+            <div data-scroll-to="one">
               <h2 className={`text text_type_main-medium  mb-6`}>Булки</h2>
               <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
                 {filteredArray.bun.map((object) => {
                   return <IngredientsCard key={object._id} data={object} />;
                 })}
               </div>
-            </InView>
-            <InView
-              as="div"
-              onChange={(inView, entry) => {
-                if (inView) {
-                  setCurrent("two");
-                }
-              }}
-            >
+            </div>
+            <div data-scroll-to="two">
               <h2
                 className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
               >
@@ -102,28 +111,20 @@ function BurgerIngredients() {
                   return <IngredientsCard key={object._id} data={object} />;
                 })}
               </div>
-            </InView>
+            </div>
 
-            <InView
-              as="div"
-              rootMargin="100px"
-              onChange={(inView, entry) => {
-                if (inView) {
-                  setCurrent("three");
-                }
-              }}
-            >
+            <div data-scroll-to="three">
               <h2
                 className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
               >
-                Основа
+                Начинки
               </h2>
               <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2 mb-6`}>
                 {filteredArray.main.map((object) => {
                   return <IngredientsCard key={object._id} data={object} />;
                 })}
               </div>
-            </InView>
+            </div>
           </div>
         </div>
       )}
