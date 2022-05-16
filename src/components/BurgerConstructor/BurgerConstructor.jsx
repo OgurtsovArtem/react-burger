@@ -96,7 +96,13 @@ function BurgerConstructor() {
 
           <div ref={drop} className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
             {addedIngredients.map((object, index) => (
-              <BasketCard key={index} data={object} isLocked={false} type="middle" index={index} />
+              <BasketCard
+                key={object.uniqId}
+                data={object}
+                isLocked={false}
+                type="middle"
+                index={index}
+              />
             ))}
           </div>
           {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="bottom" /> : null}
