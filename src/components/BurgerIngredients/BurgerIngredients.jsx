@@ -19,18 +19,14 @@ function BurgerIngredients() {
   const scroll = (e) => {
     if (tabsRef.current) {
       const scrollTo = tabsRef.current.querySelectorAll("[data-scroll-to]");
-      const errorValue = 150;
-      const topContainer = tabsRef.current.getBoundingClientRect().top + errorValue;
-      const bottomContainer = tabsRef.current.getBoundingClientRect().bottom + errorValue;
+      const targetTop = tabsRef.current.getBoundingClientRect().top;
 
       scrollTo.forEach((element) => {
-        const topItem = element.getBoundingClientRect().top - topContainer;
-        const bottomItem = element.getBoundingClientRect().bottom - bottomContainer;
-        console.log("top", topItem, "bottom", bottomItem);
-        if (topItem < 0 && bottomItem < bottomContainer) {
-          const visible = element.getAttribute("data-scroll-to");
-          console.log(visible);
-          setCurrent(visible);
+        const sectionRect = element.getBoundingClientRect();
+        const { top, bottom } = sectionRect;
+
+        if (top <= targetTop && bottom >= targetTop) {
+          setCurrent(element.getAttribute("data-scroll-to"));
         }
       });
     }
@@ -88,7 +84,7 @@ function BurgerIngredients() {
       ) : (
         <div
           ref={tabsRef}
-          onWheel={scroll}
+          onScroll={scroll}
           className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}
         >
           <div className={`${BurgerIngredientsStyle.chapter}`}>
