@@ -10,6 +10,7 @@ function BurgerIngredients() {
   const [current, setCurrent] = React.useState("one");
   const { allIngredients, allIngredientsRequest } = useSelector((state) => state.ingredients);
   const tabsRef = useRef(null);
+  let visibleSection = current;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,9 +27,13 @@ function BurgerIngredients() {
         const { top, bottom } = sectionRect;
 
         if (top <= targetTop && bottom >= targetTop) {
-          setCurrent(element.getAttribute("data-scroll-to"));
+          visibleSection = element.getAttribute("data-scroll-to");
         }
       });
+
+      if (visibleSection !== current) {
+        setCurrent(visibleSection);
+      }
     }
   };
 
