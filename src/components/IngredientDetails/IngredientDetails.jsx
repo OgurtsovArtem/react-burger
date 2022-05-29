@@ -1,11 +1,17 @@
 import IngredientDetailsStyle from "./IngredientDetails.module.css";
-import ingredientsPropTypes from "../../utils/types";
+import { useSelector } from "react-redux";
 
-function IngredientDetails({ data }) {
+function IngredientDetails() {
+  const { detailIngredients } = useSelector((state) => state.ingredients);
+
   return (
     <div className={`${IngredientDetailsStyle.body} `}>
-      <img className={IngredientDetailsStyle.image} src={data.image} alt={data.name} />
-      <p className="text text_type_main-medium mt-4">{data.name}</p>
+      <img
+        className={IngredientDetailsStyle.image}
+        src={detailIngredients.image}
+        alt={detailIngredients.name}
+      />
+      <p className="text text_type_main-medium mt-4">{detailIngredients.name}</p>
       <div className={`${IngredientDetailsStyle.specifications}  mt-8`}>
         <div className={IngredientDetailsStyle.column}>
           <p
@@ -16,7 +22,7 @@ function IngredientDetails({ data }) {
           <span
             className={`${IngredientDetailsStyle.specValue} text text_type_main-small text_color_inactive`}
           >
-            {data?.calories ?? "-"}
+            {detailIngredients?.calories ?? "-"}
           </span>
         </div>
 
@@ -29,7 +35,7 @@ function IngredientDetails({ data }) {
           <span
             className={`${IngredientDetailsStyle.specValue} text text_type_main-small text_color_inactive`}
           >
-            {data?.proteins ?? "-"}
+            {detailIngredients?.proteins ?? "-"}
           </span>
         </div>
 
@@ -42,7 +48,7 @@ function IngredientDetails({ data }) {
           <span
             className={`${IngredientDetailsStyle.specValue} text text_type_main-small text_color_inactive`}
           >
-            {data?.fat ?? "-"}
+            {detailIngredients?.fat ?? "-"}
           </span>
         </div>
 
@@ -55,15 +61,12 @@ function IngredientDetails({ data }) {
           <span
             className={`${IngredientDetailsStyle.specValue} text text_type_main-small text_color_inactive`}
           >
-            {data?.carbohydrates ?? "-"}
+            {detailIngredients?.carbohydrates ?? "-"}
           </span>
         </div>
       </div>
     </div>
   );
 }
-IngredientDetails.propTypes = {
-  data: ingredientsPropTypes.isRequired,
-};
 
 export default IngredientDetails;

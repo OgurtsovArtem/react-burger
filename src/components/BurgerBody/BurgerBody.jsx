@@ -1,32 +1,20 @@
-import PropTypes from "prop-types";
-import ingredientsPropTypes from "../../utils/types";
-
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerBodyStyle from "./BurgerBody.module.css";
-
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import Loader from "../Loader/Loader";
 
-function BurgerBody({ state }) {
+function BurgerBody() {
   return (
     <section className={BurgerBodyStyle.section}>
-      {state.success ? (
-        <>
-          <BurgerIngredients data={state.data} />
-          <BurgerConstructor data={state.data} />
-        </>
-      ) : (
-        <Loader />
-      )}
+      <>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
+      </>
     </section>
   );
 }
-
-BurgerBody.propTypes = {
-  state: PropTypes.shape({
-    success: PropTypes.bool.isRequired,
-    data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-  }).isRequired,
-};
 
 export default BurgerBody;

@@ -6,10 +6,12 @@
   width: 100%;
 }
 .products {
+  position: relative;
   height: calc(100vh - (var(--header-height) + 196px));
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .chapterList {
   display: grid;
   flex-wrap: wrap;
