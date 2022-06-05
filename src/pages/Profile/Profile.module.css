@@ -1,0 +1,43 @@
+.profile {
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.nav {
+}
+.list {
+}
+.item {
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+.data {
+  flex: 480px;
+}
+.footnote {
+  max-width: 320px;
+}
+.logout {
+  color: var(--text-inactive-color);
+}
+.link {
+  color: var(--text-inactive-color);
+}
+.activeLink {
+  color: var(--text-primary-color);
+}
+
+@media (min-width: 768.5px) {
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    gap: 60px;
+    width: auto;
+  }
+}
+@media (max-width: 768.5px) {
+  .footnote {
+    display: none;
+  }
+}

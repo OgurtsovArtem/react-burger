@@ -1,0 +1,16 @@
+.form {
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+}
+.legend {
+}
+.footnote {
+  display: flex;
+  gap: 8px;
+  text-align: center;
+  justify-content: center;
+}
+.footnote a {
+  color: var(--colors-interface-accent);
+}
