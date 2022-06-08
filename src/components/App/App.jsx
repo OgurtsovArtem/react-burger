@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import AppHeader from "../AppHeader/AppHeader";
 import {
   Login,
@@ -8,36 +8,55 @@ import {
   ForgotPassword,
   ResetPassword,
   Profile,
+  ProfileOrders,
+  Ingredient,
 } from "../../pages";
 import { ProvideAuth } from "../../services/auth";
 import { ProtectedRoute } from "../ProtectedRoute";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  const background = location.state && location.state.background;
+  const handleModalClose = () => history.goBack();
+
+  // useEffect(() => {
+  //   dispatch()
+  // }, [dispatch])
   return (
     <>
       <AppHeader />
       <ProvideAuth>
-        <Switch>
-          <Route path="/" exact={true}>
+        <Switch location={background || location}>
+          <Route path="/ingredients" exact>
             <BurgerBody />
           </Route>
-          <Route path="/login" exact={true}>
+          <ProtectedRoute path="/login" exact>
             <Login />
-          </Route>
-          <ProtectedRoute path="/register" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path="/register" exact>
             <Registration />
           </ProtectedRoute>
-          <ProtectedRoute path="/forgot-password" exact={true}>
+          <ProtectedRoute path="/forgot-password" exact>
             <ForgotPassword />
           </ProtectedRoute>
-          <ProtectedRoute path="/reset-password" exact={true}>
+          <ProtectedRoute path="/reset-password" exact>
             <ResetPassword />
           </ProtectedRoute>
-          <Route path="/profile" exact={true}>
+          <ProtectedRoute path="/profile" exact>
             <Profile />
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile/orders" exact>
+            <ProfileOrders />
+          </ProtectedRoute>
+          <Route path="/ingredients/:id" exact>
+            <Ingredient />
           </Route>
-          <ProtectedRoute path="/ingredients/:id" exact={true}></ProtectedRoute>
-          <Route path="*">
+          <Route>
             <Page404 />
           </Route>
         </Switch>
