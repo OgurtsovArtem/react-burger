@@ -11,6 +11,8 @@ import React from "react";
 
 import Burger from "../Burger/Burger";
 
+import { Link, NavLink } from "react-router-dom";
+
 import appHeaderStyles from "./AppHeader.module.css";
 
 import mobileLogo from "../../icons/logo_mobile.svg";
@@ -39,42 +41,67 @@ function AppHeader() {
               {listActive ? <ArrowDownIcon type="secondary" /> : <ArrowUpIcon type="secondary" />}
               <ul className={listActive ? appHeaderStyles.subList : appHeaderStyles.subList_active}>
                 <li className={appHeaderStyles.subItem}>
-                  <a className={appHeaderStyles.link} href="/">
+                  <NavLink
+                    className={appHeaderStyles.link}
+                    activeClassName={appHeaderStyles.activeLink}
+                    exact
+                    to="/profile"
+                  >
                     Профиль
-                  </a>
+                  </NavLink>
                 </li>
                 <li className={appHeaderStyles.subItem}>
-                  <a className={appHeaderStyles.link} href="/">
+                  <NavLink
+                    className={appHeaderStyles.link}
+                    activeClassName={appHeaderStyles.activeLink}
+                    exact
+                    to="/profile/orders"
+                  >
                     История заказов
-                  </a>
+                  </NavLink>
                 </li>
                 <li className={appHeaderStyles.subItem}>
-                  <a className={appHeaderStyles.link} href="/">
-                    Выход
-                  </a>
+                  <p>Выход</p>
                 </li>
               </ul>
             </li>
             <li className={`${appHeaderStyles.item_active} pl-5 pr-5`}>
-              <a className={appHeaderStyles.link} href="/">
-                <BurgerIcon type="primary" />
+              <NavLink
+                className={appHeaderStyles.link}
+                activeClassName={appHeaderStyles.activeLink}
+                exact
+                to="/ingredients"
+              >
+                <BurgerIcon type="secondary" />
                 <p className="text text_type_main-default pl-2">Конструктор</p>
-              </a>
+              </NavLink>
             </li>
             <li className={`${appHeaderStyles.item}  pl-5 pr-5`}>
-              <a className={appHeaderStyles.link} href="/">
+              <NavLink
+                className={appHeaderStyles.link}
+                activeClassName={appHeaderStyles.activeLink}
+                exact
+                to="/orders"
+              >
                 <ListIcon type="secondary" />
                 <p className="text text_type_main-default pl-2">Лента заказов</p>
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>
-        <div className={appHeaderStyles.logo}>
+        <Link className={appHeaderStyles.logo} to="/">
           <Logo />
-        </div>
+        </Link>
         <button className={appHeaderStyles.admin}>
-          <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default">Личный кабинет</p>
+          <NavLink
+            className={appHeaderStyles.link}
+            activeClassName={appHeaderStyles.activeLink}
+            exact
+            to="/profile"
+          >
+            <ProfileIcon type="secondary" />
+            <p className="text text_type_main-default pl-2">Личный кабинет</p>
+          </NavLink>
         </button>
         <Burger onClick={navBarStatus} menuActive={menuActive} />
       </div>
