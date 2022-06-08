@@ -1,9 +1,15 @@
 .profile {
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: 120px;
 }
 .nav {
+  max-width: 250px;
+  width: 100%;
 }
 .list {
 }
@@ -12,7 +18,7 @@
   margin-top: 25px;
 }
 .data {
-  flex: 480px;
+  width: 480px;
 }
 .footnote {
   max-width: 320px;
@@ -30,7 +36,6 @@
 @media (min-width: 768.5px) {
   .profile {
     display: flex;
-    justify-content: space-between;
     align-items: top;
     gap: 60px;
     width: auto;

@@ -8,9 +8,10 @@ export function ProtectedRoute({ children, ...rest }) {
 
   const init = async () => {
     await getUser();
+
     setUserLoaded(true);
   };
-
+  console.log(isUserLoaded);
   useEffect(() => {
     init();
   }, []);
