@@ -1,3 +1,20 @@
+.main {
+  height: 600px;
+  margin: auto;
+  width: 460px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: dash 4s alternate infinite;
+}
+.button {
+  color: var(--colors-interface-accent);
+}
 .fundo {
   animation: scales 3s alternate infinite;
   transform-origin: center;
@@ -64,22 +81,6 @@
   0% {
     opacity: 0;
   }
-}
-
-.main {
-  height: 600px;
-  margin: auto;
-  width: 460px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.path {
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  animation: dash 4s alternate infinite;
 }
 
 @keyframes dash {

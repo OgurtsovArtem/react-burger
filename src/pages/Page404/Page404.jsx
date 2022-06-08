@@ -120,9 +120,12 @@ export function Page404() {
           </g>
         </g>
       </svg>
-      <Button type="primary" size="medium" onClick={onClick}>
+      {/* <button className={styles.button} onClick={onClick}>
         На главную
-      </Button>
+      </button> */}
+      {/* <Button type="primary" size="medium" onClick={onClick}>
+        На главную
+      </Button> */}
     </div>
   );
 }
