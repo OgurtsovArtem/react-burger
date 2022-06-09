@@ -35,7 +35,7 @@ function ForgotPassword() {
         </Button>
         <div className={`${style.footnote} mb-4 mt-20`}>
           <p className={style.text}>Вспомнили пароль?</p>
-          <Link to="/">Войти</Link>
+          <Link to="/login">Войти</Link>
         </div>
       </form>
     </CenterWrapper>

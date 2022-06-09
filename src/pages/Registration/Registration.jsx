@@ -3,13 +3,42 @@ import style from "./Registration.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { login, registerUser } from "../../utils/api";
 
 function Registration() {
-  const [value, setValue] = React.useState("");
-  const inputRef = React.useRef(null);
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+  const [state, setState] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const handleInputChange = (event) => {
+    const target = event.target;
+
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const onIconClick = (event) => {
+    setTimeout(() => event.target.focus(), 0);
     alert("Icon Click Callback");
+  };
+  const sendForm = (event) => {
+    event.preventDefault();
+    const { target } = event;
+    const formNode = target.form;
+    const formIsValid = formNode.checkValidity();
+    if (!formIsValid) {
+      return;
+    }
+    const formData = new FormData(formNode);
+    console.log(formData);
+    console.log(state);
+    registerUser(state).then((res) => console.log(res));
   };
 
   return (
@@ -19,11 +48,10 @@ function Registration() {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={handleInputChange}
+          value={state.name}
           name={"name"}
           error={false}
-          ref={inputRef}
           onIconClick={onIconClick}
           errorText={"Заполните поле"}
           size={"default"}
@@ -31,11 +59,10 @@ function Registration() {
         <Input
           type={"email"}
           placeholder={"E-mail"}
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={handleInputChange}
+          value={state.email}
           name={"email"}
           error={false}
-          ref={inputRef}
           onIconClick={onIconClick}
           errorText={"Некорректный E-mail"}
           size={"default"}
@@ -43,22 +70,21 @@ function Registration() {
         <Input
           type={"password"}
           placeholder={"Пароль"}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleInputChange}
           icon={"ShowIcon"}
-          value={value}
+          value={state.password}
           name={"password"}
           error={false}
-          ref={inputRef}
           onIconClick={onIconClick}
           errorText={"Неверный пароль"}
           size={"default"}
         />
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={sendForm}>
           Зарегистрироваться
         </Button>
         <div className={`${style.footnote} mb-4 mt-20`}>
           <p className={style.text}>Уже зарегистрированы?</p>
-          <Link to="/">Войти</Link>
+          <Link to="/login">Войти</Link>
         </div>
       </form>
     </CenterWrapper>
