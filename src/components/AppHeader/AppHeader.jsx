@@ -70,7 +70,7 @@ function AppHeader() {
                 className={appHeaderStyles.link}
                 activeClassName={appHeaderStyles.activeLink}
                 exact
-                to="/ingredients"
+                to="/"
               >
                 <BurgerIcon type="secondary" />
                 <p className="text text_type_main-default pl-2">Конструктор</p>
