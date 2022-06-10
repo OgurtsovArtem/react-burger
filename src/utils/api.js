@@ -88,14 +88,7 @@ export const login = (data) => {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify(data),
-  })
-    .then(checkResponse)
-    .then((data) => {
-      if (data.success) {
-        localStorage.setItem("refreshToken", data.refreshToken);
-        setCookie("accessToken", data.accessToken);
-      }
-    });
+  }).then(checkResponse);
 };
 
 export const logout = () => {

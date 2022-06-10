@@ -1,58 +1,66 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Registration.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { login, registerUser } from "../../utils/api";
+import { registerUser } from "../../utils/api";
+import { formValidator } from "../../utils/formValidator";
 
 function Registration() {
-  const [state, setState] = React.useState({
+  const initialState = {
     name: "",
     email: "",
     password: "",
-  });
+  };
+
+  const [formData, setFormData] = React.useState(initialState);
+  const [formErrors, setformErrors] = React.useState(initialState);
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  useEffect(() => {
+    Object.values(formErrors).every((item) => item)
+      ? setButtonDisabled(false)
+      : setButtonDisabled(true);
+  }, [formErrors]);
+
+  const onIconClick = () => setShowPassword(!showPassword);
+
   const handleInputChange = (event) => {
     const target = event.target;
-
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
+    target.required = true;
 
-    setState({
-      ...state,
+    const error = formValidator(target);
+
+    setFormData({
+      ...formData,
       [name]: value,
+    });
+    setformErrors({
+      ...formErrors,
+      [name]: error,
     });
   };
 
-  const onIconClick = (event) => {
-    setTimeout(() => event.target.focus(), 0);
-    alert("Icon Click Callback");
-  };
   const sendForm = (event) => {
     event.preventDefault();
-    const { target } = event;
-    const formNode = target.form;
-    const formIsValid = formNode.checkValidity();
-    if (!formIsValid) {
-      return;
-    }
-    const formData = new FormData(formNode);
-    console.log(formData);
-    console.log(state);
-    registerUser(state).then((res) => console.log(res));
+    console.log("отправил");
+    registerUser(formData).then((res) => console.log(res));
   };
 
   return (
     <CenterWrapper>
-      <form className={`${style.form}`}>
+      <form className={`${style.form}`} onSubmit={sendForm}>
         <legend className={`${style.legend} text text_type_main-medium mb-6`}>Регистрация</legend>
         <Input
           type={"text"}
           placeholder={"Имя"}
           onChange={handleInputChange}
-          value={state.name}
+          value={formData.name}
           name={"name"}
-          error={false}
-          onIconClick={onIconClick}
+          error={!formErrors.name}
           errorText={"Заполните поле"}
           size={"default"}
         />
@@ -60,26 +68,25 @@ function Registration() {
           type={"email"}
           placeholder={"E-mail"}
           onChange={handleInputChange}
-          value={state.email}
+          value={formData.email}
           name={"email"}
-          error={false}
-          onIconClick={onIconClick}
+          error={!formErrors.email}
           errorText={"Некорректный E-mail"}
           size={"default"}
         />
         <Input
-          type={"password"}
+          type={showPassword ? "text" : "password"}
           placeholder={"Пароль"}
           onChange={handleInputChange}
-          icon={"ShowIcon"}
-          value={state.password}
+          icon={showPassword ? "HideIcon" : "ShowIcon"}
+          value={formData.password}
           name={"password"}
-          error={false}
+          error={!formErrors.password}
           onIconClick={onIconClick}
           errorText={"Неверный пароль"}
           size={"default"}
         />
-        <Button type="primary" size="medium" onClick={sendForm}>
+        <Button type="primary" size="medium" disabled={buttonDisabled}>
           Зарегистрироваться
         </Button>
         <div className={`${style.footnote} mb-4 mt-20`}>

@@ -33,7 +33,7 @@ function ProfileForm() {
     });
   };
   return (
-    <div className={style.form}>
+    <form className={style.form}>
       <Input
         type={"text"}
         placeholder={"Имя"}
@@ -73,7 +73,7 @@ function ProfileForm() {
         errorText={"Ошибка"}
         size={"default"}
       />
-    </div>
+    </form>
   );
 }
 
