@@ -15,10 +15,18 @@ import {
   ProfileOrders,
   Ingredient,
 } from "../../pages";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkUserAuth } from "../../services/actions/user";
 
 function App() {
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
 
   const background = location.state && location.state.background;
   const handleModalClose = () => history.goBack();
