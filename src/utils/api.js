@@ -38,15 +38,24 @@ export const fetchWithRefresh = async (url, options) => {
   }
 };
 
-export const orderBurger = (data) => {
-  return fetchWithRefresh(`${MAIN_URL}/orders`, {
+export const forgotPassword = (data) => {
+  return fetchWithRefresh(`${MAIN_URL}/password-reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: getCookie("accessToken"),
     },
     body: JSON.stringify(data),
-  });
+  })
+};
+
+export const resetPassword = (data) => {
+  return fetchWithRefresh(`${MAIN_URL}/password-reset/reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(data),
+  })
 };
 
 export const registerUser = (data) => {
@@ -71,7 +80,7 @@ export const getUser = () => {
 };
 
 export const updateUser = (data) => {
-  return fetchWithRefresh(`${MAIN_URL}/auth/register`, {
+  return fetchWithRefresh(`${MAIN_URL}/auth/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -92,7 +101,7 @@ export const login = (data) => {
 };
 
 export const logout = () => {
-  return fetch(`${MAIN_URL}/auth/logout`, {
+  return fetchWithRefresh(`${MAIN_URL}/auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -100,5 +109,5 @@ export const logout = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then(checkResponse);
+  });
 };
