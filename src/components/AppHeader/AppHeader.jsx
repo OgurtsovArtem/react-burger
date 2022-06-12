@@ -16,8 +16,10 @@ import { Link, NavLink } from "react-router-dom";
 import appHeaderStyles from "./AppHeader.module.css";
 
 import mobileLogo from "../../icons/logo_mobile.svg";
+import { useSelector } from "react-redux";
 
 function AppHeader() {
+  const { isAuthCheck, data } = useSelector((store) => store.user);
   const [menuActive, setMenuActive] = React.useState(false);
   const [listActive, setListActive] = React.useState(false);
 
@@ -100,7 +102,9 @@ function AppHeader() {
             to="/profile"
           >
             <ProfileIcon type="secondary" />
-            <p className="text text_type_main-default pl-2">Личный кабинет</p>
+            <p className="text text_type_main-default pl-2">
+              {isAuthCheck ? data?.name || data?.user?.name : "Личный кабинет"}
+            </p>
           </NavLink>
         </button>
         <Burger onClick={navBarStatus} menuActive={menuActive} />
