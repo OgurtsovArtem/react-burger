@@ -2,10 +2,7 @@ import React from "react";
 import IngredientsCardStyle from "./IngredientsCard.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import {
-  SET_DETAIL_INGREDIENTS,
-  DELETE_DETAIL_INGREDIENTS,
-} from "../../services/actions/ingredients";
+import { DELETE_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
 import ingredientsPropTypes from "../../utils/types";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
@@ -14,7 +11,6 @@ function IngredientsCard({ data }) {
   const [activePopup, setActivePopup] = React.useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
-  // const { url } = useRouteMatch();
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: { id: data._id, type: data.type },
@@ -23,11 +19,6 @@ function IngredientsCard({ data }) {
     setActivePopup(!activePopup);
     if (activePopup) {
       dispatch({ type: DELETE_DETAIL_INGREDIENTS });
-    } else {
-      dispatch({
-        type: SET_DETAIL_INGREDIENTS,
-        _id: data._id,
-      });
     }
   };
   return (

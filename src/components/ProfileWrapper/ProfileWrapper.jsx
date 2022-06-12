@@ -1,7 +1,13 @@
 import style from "./ProfileWrapper.module.css";
-import { NavLink, useLocation, useHistory, useRouteMatch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { signOut } from "../../services/actions/user";
+import { useDispatch } from "react-redux";
 
 function ProfileWrapper({ children }) {
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch(signOut());
+  };
   return (
     <div className={style.profile}>
       <nav className={style.nav}>
@@ -22,7 +28,9 @@ function ProfileWrapper({ children }) {
             </NavLink>
           </li>
           <li className={`${style.item} text text_type_main-medium`}>
-            <button className={style.logout}>Выход</button>
+            <button className={style.logout} onClick={logout}>
+              Выход
+            </button>
           </li>
         </ul>
         <p className={`${style.footnote} mt-20 text text_type_main-default text_color_inactive`}>
