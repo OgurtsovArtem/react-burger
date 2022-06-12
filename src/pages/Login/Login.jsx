@@ -3,19 +3,27 @@ import style from "./Login.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { login } from "../../utils/api";
 import { formValidator } from "../../utils/formValidator";
+import { signIn } from "../../services/actions/user";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Login() {
-  const initialState = {
+  const [formData, setFormData] = React.useState({
     email: "",
     password: "",
-  };
-
-  const [formData, setFormData] = React.useState(initialState);
-  const [formErrors, setformErrors] = React.useState(initialState);
+  });
+  const [formErrors, setFormErrors] = React.useState({
+    email: "",
+    password: "",
+  });
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
+
+  const { loginUserFailed, loginUserRequest } = useSelector((state) => state.user);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Object.values(formErrors).every((item) => item)
@@ -32,20 +40,21 @@ function Login() {
     target.required = true;
 
     const error = formValidator(target);
-
     setFormData({
       ...formData,
       [name]: value,
     });
-    setformErrors({
+    setFormErrors({
       ...formErrors,
       [name]: error,
     });
   };
-
   const sendForm = (event) => {
     event.preventDefault();
-    login(formData).then((res) => console.log(res));
+    dispatch(signIn(formData));
+    if (!loginUserRequest && !loginUserFailed) {
+      history.replace({ pathname: "/" });
+    }
   };
 
   return (

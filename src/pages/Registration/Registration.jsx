@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import style from "./Registration.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
@@ -7,6 +9,8 @@ import { registerUser } from "../../utils/api";
 import { formValidator } from "../../utils/formValidator";
 
 function Registration() {
+  const { registerUserFailed, registerUserRequest } = useSelector((state) => state.user);
+  const history = useHistory();
   const initialState = {
     name: "",
     email: "",
@@ -46,8 +50,10 @@ function Registration() {
 
   const sendForm = (event) => {
     event.preventDefault();
-    console.log("отправил");
     registerUser(formData).then((res) => console.log(res));
+    if (!registerUserRequest && !registerUserFailed) {
+      history.replace({ pathname: "/login" });
+    }
   };
 
   return (

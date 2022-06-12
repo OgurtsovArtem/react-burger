@@ -4,10 +4,13 @@ import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { formValidator } from "../../utils/formValidator";
+import { resetPassword } from "../../utils/api";
+import { useHistory } from "react-router-dom";
 
 function ResetPassword() {
+  const history = useHistory();
   const initialState = {
-    code: "",
+    token: "",
     password: "",
   };
 
@@ -44,7 +47,14 @@ function ResetPassword() {
 
   const sendForm = (event) => {
     event.preventDefault();
-    console.log("отправил");
+    console.log(formData);
+    resetPassword(formData).then((res) => {
+      if (res.success === true) {
+        history.replace({ pathname: "/login" });
+      } else {
+        console.error(res.message);
+      }
+    });
   };
 
   return (
@@ -69,9 +79,9 @@ function ResetPassword() {
           type={"text"}
           placeholder={"Введите код из письма"}
           onChange={handleInputChange}
-          value={formData.code}
-          name={"code"}
-          error={!formErrors.code}
+          value={formData.token}
+          name={"token"}
+          error={!formErrors.token}
           errorText={"Ошибка"}
           size={"default"}
         />

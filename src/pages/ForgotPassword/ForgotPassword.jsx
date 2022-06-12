@@ -4,8 +4,11 @@ import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { formValidator } from "../../utils/formValidator";
+import { forgotPassword } from "../../utils/api";
+import { useHistory } from "react-router-dom";
 
 function ForgotPassword() {
+  const history = useHistory();
   const initialState = {
     email: "",
   };
@@ -43,7 +46,13 @@ function ForgotPassword() {
 
   const sendForm = (event) => {
     event.preventDefault();
-    console.log("отправил");
+    forgotPassword(formData).then((res) => {
+      if (res.success === true) {
+        history.replace({ pathname: "/reset-password" });
+      } else {
+        console.error(res.message);
+      }
+    });
   };
 
   return (
