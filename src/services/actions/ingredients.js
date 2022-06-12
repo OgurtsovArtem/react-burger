@@ -5,6 +5,8 @@ export const GET_ALL_INGREDIENTS_FAILED = 'GET_ALL_INGREDIENTS_FAILED';
 export const GET_ALL_INGREDIENTS_SUCCESS = 'GET_ALL_INGREDIENTS_SUCCESS';
 export const SET_DETAIL_INGREDIENTS = 'SET_DETAIL_INGREDIENTS';
 export const DELETE_DETAIL_INGREDIENTS = 'DELETE_DETAIL_INGREDIENTS';
+export const DETAIL_INGREDIENTS_REQUEST ='DETAIL_INGREDIENTS_REQUEST';
+export const DETAIL_INGREDIENTS_FAILED ='DETAIL_INGREDIENTS_FAILED';
 export const ADD_ITEM = 'ADD_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const DECREASE_ITEM = 'DECREASE_ITEM';
@@ -33,6 +35,33 @@ export function getIngredients() {
       .catch((err) => {
         dispatch({
           type: GET_ALL_INGREDIENTS_FAILED
+        });
+      });
+  }
+}
+
+export function getIngredient(id) {
+  return function(dispatch) {
+    dispatch({
+      type: DETAIL_INGREDIENTS_REQUEST
+    });
+    fetch(`${MAIN_URL}/ingredients`)
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: SET_DETAIL_INGREDIENTS,
+          _id: id,
+          data : data.data
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: DETAIL_INGREDIENTS_FAILED
         });
       });
   }
