@@ -3,6 +3,8 @@ import {
   GET_ALL_INGREDIENTS_FAILED,
   GET_ALL_INGREDIENTS_SUCCESS,
   SET_DETAIL_INGREDIENTS,
+  DETAIL_INGREDIENTS_REQUEST,
+  DETAIL_INGREDIENTS_FAILED,
   DELETE_DETAIL_INGREDIENTS,
   ADD_ITEM,
   DELETE_ITEM,
@@ -19,6 +21,9 @@ const initialState = {
 
   addedIngredients: [],
   detailIngredients: null,
+  detailIngredientsRequest: false,
+  detailIngredientsFailed: false,
+
   bun: [],
 }
 
@@ -48,7 +53,8 @@ switch (action.type) {
   case SET_DETAIL_INGREDIENTS: {
     return { 
       ...state, 
-      detailIngredients: [...state.allIngredients].find(item => item._id === action._id),
+      detailIngredients: action.data.find(item => item._id === action._id),
+      detailIngredientsRequest: false,
     };
   }
   case DELETE_DETAIL_INGREDIENTS: {
@@ -57,7 +63,20 @@ switch (action.type) {
       detailIngredients: {},
     };
   }
-
+  case DETAIL_INGREDIENTS_REQUEST: {
+    return { 
+      ...state, 
+      detailIngredientsRequest: true,
+      detailIngredientsFailed: false,
+    };
+  }
+  case DETAIL_INGREDIENTS_FAILED: {
+    return { 
+      ...state, 
+      detailIngredientsFailed: true, 
+      detailIngredientsRequest: false 
+    };
+  }
   case DECREASE_ITEM: {
     return { 
       ...state,
