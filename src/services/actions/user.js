@@ -27,6 +27,7 @@ export function checkUserAuth() {
       type: GET_USER_REQUEST
     });
     getUser().then((data) => {
+      console.log(data)
       if(data.success) {
         dispatch({
           type: GET_USER_SUCCESS,
@@ -53,6 +54,7 @@ export function signIn(formData) {
       type: LOGIN_USER_REQUEST
     });
     login(formData).then((data) => {
+      console.log(data)
         dispatch({
           type: LOGIN_USER_SUCCESS,
           data: data
@@ -108,6 +110,7 @@ export function update(formData) {
       type: UPDATE_USER_REQUEST
     });
     updateUser(formData).then((data) => {
+      console.log(data)
         dispatch({
           type: UPDATE_USER_SUCCESS,
           data: data

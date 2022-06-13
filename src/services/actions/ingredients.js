@@ -39,30 +39,3 @@ export function getIngredients() {
       });
   }
 }
-
-export function getIngredient(id) {
-  return function(dispatch) {
-    dispatch({
-      type: DETAIL_INGREDIENTS_REQUEST
-    });
-    fetch(`${MAIN_URL}/ingredients`)
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        dispatch({
-          type: SET_DETAIL_INGREDIENTS,
-          _id: id,
-          data : data.data
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: DETAIL_INGREDIENTS_FAILED
-        });
-      });
-  }
-}
