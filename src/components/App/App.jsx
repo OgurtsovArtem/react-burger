@@ -18,6 +18,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkUserAuth } from "../../services/actions/user";
+import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
   const history = useHistory();
@@ -25,6 +26,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getIngredients());
     dispatch(checkUserAuth());
   }, [dispatch]);
 
