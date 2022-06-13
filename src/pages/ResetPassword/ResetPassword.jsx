@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { formValidator } from "../../utils/formValidator";
 import { resetPassword } from "../../utils/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 
 function ResetPassword() {
   const history = useHistory();
+  const location = useLocation();
+  const { state } = location;
+  console.log(location, state);
   const initialState = {
     token: "",
     password: "",
@@ -56,6 +59,10 @@ function ResetPassword() {
       }
     });
   };
+
+  if (!state?.resetDone) {
+    return <Redirect to={state?.from || "/"} />;
+  }
 
   return (
     <CenterWrapper>

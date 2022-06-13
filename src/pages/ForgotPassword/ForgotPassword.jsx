@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { formValidator } from "../../utils/formValidator";
 import { forgotPassword } from "../../utils/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 function ForgotPassword() {
   const history = useHistory();
+  const location = useLocation();
+  console.log(location);
   const initialState = {
     email: "",
   };
@@ -48,7 +50,10 @@ function ForgotPassword() {
     event.preventDefault();
     forgotPassword(formData).then((res) => {
       if (res.success === true) {
-        history.replace({ pathname: "/reset-password" });
+        history.replace({
+          pathname: "/reset-password",
+          state: { resetDone: location },
+        });
       } else {
         console.error(res.message);
       }

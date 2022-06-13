@@ -6,8 +6,6 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { formValidator } from "../../utils/formValidator";
 import { signIn } from "../../services/actions/user";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = React.useState({
@@ -21,8 +19,6 @@ function Login() {
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const { loginUserFailed, loginUserRequest } = useSelector((state) => state.user);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,9 +48,6 @@ function Login() {
   const sendForm = (event) => {
     event.preventDefault();
     dispatch(signIn(formData));
-    if (!loginUserRequest && !loginUserFailed) {
-      history.replace({ pathname: "/" });
-    }
   };
 
   return (
