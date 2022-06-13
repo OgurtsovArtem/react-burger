@@ -2,20 +2,22 @@ import IngredientDetailsStyle from "./IngredientDetails.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useEffect } from "react";
-import { getIngredient } from "../../services/actions/ingredients";
+import { SET_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
 import { Loader } from "../Loader/Loader";
 
 function IngredientDetails() {
-  const { detailIngredients, detailIngredientsRequest } = useSelector((state) => state.ingredients);
+  const { detailIngredients, allIngredientsRequest, allIngredients } = useSelector(
+    (state) => state.ingredients
+  );
   const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {
-    dispatch(getIngredient(id));
-  }, [dispatch, id]);
+    dispatch({ type: SET_DETAIL_INGREDIENTS, _id: id });
+  }, [dispatch, id, allIngredients]);
 
   return (
     <>
-      {!detailIngredientsRequest && detailIngredients ? (
+      {!allIngredientsRequest && allIngredients && detailIngredients ? (
         <div className={`${IngredientDetailsStyle.body} `}>
           <img
             className={IngredientDetailsStyle.image}
