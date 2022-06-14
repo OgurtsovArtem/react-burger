@@ -39,7 +39,9 @@ function AppHeader() {
           <ul className={appHeaderStyles.list}>
             <li className={`${appHeaderStyles.itemMobile}  pl-5 pr-5`} onClick={listStatus}>
               <ProfileIcon type="secondary" />
-              <p className="text text_type_main-default pl-2">Личный кабинет</p>
+              <p className="text text_type_main-default pl-2">
+                {isAuthCheck ? data?.name || data?.user?.name : "Личный кабинет"}
+              </p>
               {listActive ? <ArrowDownIcon type="secondary" /> : <ArrowUpIcon type="secondary" />}
               <ul className={listActive ? appHeaderStyles.subList : appHeaderStyles.subList_active}>
                 <li className={appHeaderStyles.subItem}>
