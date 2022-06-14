@@ -22,16 +22,14 @@ export const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    console.log(err)
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken();
-      console.log(refreshData);
       if (!refreshData.success) {
         Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      options.headers.Authorization = refreshData.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
@@ -47,7 +45,7 @@ export const forgotPassword = (data) => {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify(data),
-  })
+  });
 };
 
 export const resetPassword = (data) => {
@@ -57,7 +55,7 @@ export const resetPassword = (data) => {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify(data),
-  })
+  });
 };
 
 export const registerUser = (data) => {
