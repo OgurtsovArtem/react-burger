@@ -1,0 +1,7 @@
+.form {
+  width: 480px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+}

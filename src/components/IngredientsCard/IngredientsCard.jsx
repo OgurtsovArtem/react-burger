@@ -2,17 +2,14 @@ import React from "react";
 import IngredientsCardStyle from "./IngredientsCard.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import {
-  SET_DETAIL_INGREDIENTS,
-  DELETE_DETAIL_INGREDIENTS,
-} from "../../services/actions/ingredients";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import Modal from "../Modal/Modal";
+import { DELETE_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
 import ingredientsPropTypes from "../../utils/types";
 import { useDrag } from "react-dnd";
+import { Link, useLocation } from "react-router-dom";
 
 function IngredientsCard({ data }) {
   const [activePopup, setActivePopup] = React.useState(false);
+  const location = useLocation();
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: "ingredient",
@@ -22,20 +19,10 @@ function IngredientsCard({ data }) {
     setActivePopup(!activePopup);
     if (activePopup) {
       dispatch({ type: DELETE_DETAIL_INGREDIENTS });
-    } else {
-      dispatch({
-        type: SET_DETAIL_INGREDIENTS,
-        _id: data._id,
-      });
     }
   };
   return (
-    <>
-      {activePopup && (
-        <Modal onClose={changePopupStatus} header={"Детали ингредиента"}>
-          <IngredientDetails />
-        </Modal>
-      )}
+    <Link to={{ pathname: `/ingredients/${data._id}`, state: { background: location } }}>
       <div ref={dragRef} className={IngredientsCardStyle.card} onClick={changePopupStatus}>
         {data?.qty ? <Counter count={data.qty} size="default" /> : null}
 
@@ -54,7 +41,7 @@ function IngredientsCard({ data }) {
         </div>
         <h3 className="text text_type_main-default">{data.name}</h3>
       </div>
-    </>
+    </Link>
   );
 }
 

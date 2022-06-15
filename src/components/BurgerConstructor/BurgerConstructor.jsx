@@ -12,6 +12,7 @@ import Modal from "../Modal/Modal";
 
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import { useDrop } from "react-dnd";
+import { useHistory } from "react-router";
 
 const BUTTON_STATUS_NAME = {
   desktop: "Оформить заказ",
@@ -24,11 +25,13 @@ function BurgerConstructor() {
   const [count, setCount] = React.useState(0);
   const [mobile, setMobile] = React.useState(window.matchMedia("(max-width: 1035px)").matches);
   const [activePopup, setActivePopup] = React.useState(false);
+  const { isAuthCheck } = useSelector((store) => store.user);
   const { addedIngredients, bun } = useSelector((store) => store.ingredients);
   const ingredientsPrice = addedIngredients.reduce((acc, item) => acc + item.price, 0);
   const bunPrice = bun.reduce((acc, item) => acc + item.price * 2, 0);
   const totalPrice = ingredientsPrice + bunPrice;
   const dispatch = useDispatch();
+  const history = useHistory();
   const addItem = (item) => {
     setCount((prevCount) => prevCount + 1);
     dispatch({
@@ -55,11 +58,19 @@ function BurgerConstructor() {
   });
 
   const changeBodyStatus = () => {
-    setActiveBody(!activeBody);
+    if (isAuthCheck) {
+      setActiveBody(!activeBody);
+    } else {
+      history.replace({ pathname: "/login" });
+    }
   };
 
   const changePopupStatus = () => {
-    setActivePopup(!activePopup);
+    if (isAuthCheck) {
+      setActivePopup(!activePopup);
+    } else {
+      history.replace({ pathname: "/login" });
+    }
   };
 
   React.useEffect(() => {

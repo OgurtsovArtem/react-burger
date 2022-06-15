@@ -13,11 +13,21 @@
 .link {
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  color: var(--text-inactive-color);
+}
+.link svg {
+  color: var(--text-inactive-color);
+}
+.activeLink {
+  color: var(--text-primary-color);
+}
+.activeLink svg {
+  fill: var(--text-primary-color);
 }
 .item {
   padding-top: 16px;
   padding-bottom: 16px;
-
   color: var(--text-inactive-color);
 }
 .item svg {
@@ -53,6 +63,7 @@
   composes: item;
   flex-wrap: wrap;
   cursor: pointer;
+  display: flex;
 }
 .admin {
   composes: item;

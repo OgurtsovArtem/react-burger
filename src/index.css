@@ -19,6 +19,7 @@
   --z-index-xxl: 2000;
   /* HEADER */
   --header-height: 88px;
+  --header-height-mobile: 72px;
   /* CONTAINER */
 
   --container-max-width: 1280px;
@@ -44,6 +45,16 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: var(--scrollbarThumbColor);
   border: var(--scrollbarBorder);
+}
+
+/* Перезаписывание UI стилией */
+.input__container {
+  width: 100% !important;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+.input {
+  width: 100% !important;
 }
 
 *,
@@ -89,6 +100,10 @@ h6 {
   font-size: inherit;
 }
 button {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
   border: none;
   background-color: transparent;
   padding: 0;
@@ -99,14 +114,12 @@ button {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

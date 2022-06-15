@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import IngredientsCard from "../IngredientsCard/IngredientsCard";
-import { getIngredients } from "../../services/actions/ingredients";
 import { Loader } from "../Loader/Loader";
 
 function BurgerIngredients() {
@@ -11,11 +10,6 @@ function BurgerIngredients() {
   const { allIngredients, allIngredientsRequest } = useSelector((state) => state.ingredients);
   const tabsRef = useRef(null);
   let visibleSection = current;
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const scroll = (e) => {
     if (tabsRef.current) {
@@ -84,7 +78,7 @@ function BurgerIngredients() {
           </Tab>
         </div>
       </div>
-      {allIngredientsRequest ? (
+      {!allIngredientsRequest & allIngredients ? (
         <Loader size="large" />
       ) : (
         <div
