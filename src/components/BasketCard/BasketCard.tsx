@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, FC } from "react";
 import clsx from "clsx";
 import {
   DeleteIcon,
@@ -8,12 +8,27 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DELETE_ITEM, DECREASE_ITEM, CHANGE_ITEM } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import BasketCardStyle from "./BasketCard.module.css";
-import ingredientsPropTypes from "../../utils/types";
-import { useDrop, useDrag } from "react-dnd";
+import { IIngredientsPropTypes } from "../../utils/types";
+import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
 
-function BasketCard({ isLocked, data, type, index }) {
+// type Data = Pick<IIngredientsPropTypes, "name" | "image_mobile" | "price" | "_id" | "uniqId">;
+
+interface IBasketCardProps {
+  isLocked: boolean;
+  data: IIngredientsPropTypes;
+  type: "top" | "bottom" | "middle";
+  index: number;
+}
+
+type exponentCallback = (
+  dragId: string,
+  dragIndex: number,
+  hoverId: string,
+  hoverIndex: number
+) => void;
+
+const BasketCard: FC<IBasketCardProps> = ({ isLocked, data, type, index }) => {
   const { name, image_mobile, price, _id, uniqId } = data;
   const dispatch = useDispatch();
   const onDelete = () => {
@@ -26,7 +41,8 @@ function BasketCard({ isLocked, data, type, index }) {
       id: _id,
     });
   };
-  const moveCard = useCallback(
+
+  const moveCard = useCallback<exponentCallback>(
     (dragId, dragIndex, hoverId, hoverIndex) => {
       dispatch({
         type: CHANGE_ITEM,
@@ -38,11 +54,14 @@ function BasketCard({ isLocked, data, type, index }) {
     },
     [dispatch]
   );
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
   const [, drop] = useDrop({
     accept: "moveIngredients",
 
-    hover(item, monitor) {
+    hover(
+      item: { index: number; uniqId: "string" },
+      monitor: DropTargetMonitor<{ index: number; uniqId: "string" }>
+    ) {
       if (!ref.current) {
         return;
       }
@@ -61,6 +80,9 @@ function BasketCard({ isLocked, data, type, index }) {
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
+      if (!hoverBoundingRect || !clientOffset) {
+        return;
+      }
       // Get pixels to the top
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       // Only perform the move when the mouse has crossed half of the items height
@@ -137,12 +159,6 @@ function BasketCard({ isLocked, data, type, index }) {
       </div>
     </div>
   );
-}
-
-BasketCard.propTypes = {
-  isLocked: PropTypes.bool.isRequired,
-  data: ingredientsPropTypes.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default BasketCard;

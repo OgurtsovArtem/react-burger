@@ -1,13 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 import IngredientsCardStyle from "./IngredientsCard.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { DELETE_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
-import ingredientsPropTypes from "../../utils/types";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
+import { IIngredientsPropTypes } from "../../utils/types";
 
-function IngredientsCard({ data }) {
+interface IIngredientsCardProps {
+  data: IIngredientsPropTypes;
+}
+
+const IngredientsCard: FC<IIngredientsCardProps> = ({ data }) => {
   const [activePopup, setActivePopup] = React.useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -43,10 +47,6 @@ function IngredientsCard({ data }) {
       </div>
     </Link>
   );
-}
-
-IngredientsCard.propTypes = {
-  data: ingredientsPropTypes.isRequired,
 };
 
 export default IngredientsCard;

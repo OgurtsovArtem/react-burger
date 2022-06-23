@@ -9,10 +9,17 @@ import { ADD_ITEM, INCREASE_ITEM, ADD_BUN } from "../../services/actions/ingredi
 import BasketCard from "../BasketCard/BasketCard";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
+import { IIngredientsPropTypes } from "../../utils/types";
 
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router";
+
+declare module "react" {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
 
 const BUTTON_STATUS_NAME = {
   desktop: "Оформить заказ",
@@ -21,18 +28,24 @@ const BUTTON_STATUS_NAME = {
 };
 
 function BurgerConstructor() {
-  const [activeBody, setActiveBody] = React.useState(false);
-  const [count, setCount] = React.useState(0);
-  const [mobile, setMobile] = React.useState(window.matchMedia("(max-width: 1035px)").matches);
-  const [activePopup, setActivePopup] = React.useState(false);
-  const { isAuthCheck } = useSelector((store) => store.user);
-  const { addedIngredients, bun } = useSelector((store) => store.ingredients);
-  const ingredientsPrice = addedIngredients.reduce((acc, item) => acc + item.price, 0);
-  const bunPrice = bun.reduce((acc, item) => acc + item.price * 2, 0);
+  const [activeBody, setActiveBody] = React.useState<boolean>(false);
+  const [count, setCount] = React.useState<number>(0);
+  const [mobile, setMobile] = React.useState<boolean>(
+    window.matchMedia("(max-width: 1035px)").matches
+  );
+  const [activePopup, setActivePopup] = React.useState<boolean>(false);
+
+  const { isAuthCheck } = useSelector((store: any) => store.user);
+  const { addedIngredients, bun } = useSelector((store: any) => store.ingredients);
+
+  const ingredientsPrice = addedIngredients.reduce((acc: any, item: any) => acc + item.price, 0);
+  const bunPrice = bun.reduce((acc: any, item: any) => acc + item.price * 2, 0);
   const totalPrice = ingredientsPrice + bunPrice;
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const addItem = (item) => {
+
+  const addItem = (item: { id: string }) => {
     setCount((prevCount) => prevCount + 1);
     dispatch({
       type: ADD_ITEM,
@@ -42,7 +55,7 @@ function BurgerConstructor() {
     });
     dispatch({ type: INCREASE_ITEM, id: item.id });
   };
-  const addBun = (item) => {
+  const addBun = (item: any) => {
     dispatch({ type: ADD_BUN, id: item.id });
   };
 
@@ -51,7 +64,7 @@ function BurgerConstructor() {
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(item) {
+    drop(item: any) {
       const type = item.type;
       type === "bun" ? addBun(item) : addItem(item);
     },
@@ -99,14 +112,14 @@ function BurgerConstructor() {
         >
           <div className={`${BurgerConstructorStyle.header} pt-4 pb-4 pl-2 pr-2`}>
             <h2 className={`${BurgerConstructorStyle.title} text text_type_main-medium`}>Заказ</h2>
-            <button onClick={activeBody ? changeBodyStatus : null}>
+            <button onClick={activeBody ? changeBodyStatus : undefined}>
               <CloseIcon type="primary" />
             </button>
           </div>
-          {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="top" /> : null}
+          {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="top" index={1} /> : null}
 
           <div ref={drop} className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
-            {addedIngredients.map((object, index) => (
+            {addedIngredients.map((object: IIngredientsPropTypes, index: number) => (
               <BasketCard
                 key={object.uniqId}
                 data={object}
@@ -116,7 +129,7 @@ function BurgerConstructor() {
               />
             ))}
           </div>
-          {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="bottom" /> : null}
+          {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="bottom" index={2} /> : null}
         </div>
         <div className={`${BurgerConstructorStyle.footer} pt-10 pl-4 pr-4`}>
           <div className={`${BurgerConstructorStyle.totalPrice} mr-10`}>

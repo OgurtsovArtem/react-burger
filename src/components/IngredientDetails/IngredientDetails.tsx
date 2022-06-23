@@ -7,10 +7,10 @@ import { Loader } from "../Loader/Loader";
 
 function IngredientDetails() {
   const { detailIngredients, allIngredientsRequest, allIngredients } = useSelector(
-    (state) => state.ingredients
+    (state: any) => state.ingredients
   );
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   useEffect(() => {
     dispatch({ type: SET_DETAIL_INGREDIENTS, _id: id });
   }, [dispatch, id, allIngredients]);

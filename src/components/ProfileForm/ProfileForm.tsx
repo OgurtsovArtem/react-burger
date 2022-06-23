@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import style from "./ProfileForm.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,11 +20,11 @@ function ProfileForm() {
   const [formData, setFormData] = React.useState(initialState);
   const [edit, setEdit] = React.useState(initialEditState);
 
-  const inputNameRef = React.useRef(null);
-  const inputLoginRef = React.useRef(null);
-  const inputPasswordRef = React.useRef(null);
-  const formRef = React.useRef(null);
-  const dispatch = useDispatch();
+  const inputNameRef = React.useRef<HTMLInputElement>(null);
+  const inputLoginRef = React.useRef<HTMLInputElement>(null);
+  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     if (formRef) {
@@ -58,8 +58,8 @@ function ProfileForm() {
 
     !edit.password ? (input.disabled = false) : (input.disabled = true);
   };
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: MouseEvent) => {
+    const target = event.target as HTMLInputElement;
 
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -143,7 +143,7 @@ function ProfileForm() {
           ) : null}
         </form>
       ) : (
-        <Loader />
+        <Loader size="medium" />
       )}
     </>
   );

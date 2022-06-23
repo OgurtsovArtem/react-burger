@@ -4,19 +4,22 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import IngredientsCard from "../IngredientsCard/IngredientsCard";
 import { Loader } from "../Loader/Loader";
+import { IIngredientsPropTypes } from "../../utils/types";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("one");
-  const { allIngredients, allIngredientsRequest } = useSelector((state) => state.ingredients);
-  const tabsRef = useRef(null);
+  const { allIngredients, allIngredientsRequest } = useSelector(
+    (state: any): any => state.ingredients
+  );
+  const tabsRef = useRef<HTMLInputElement>(null);
   let visibleSection = current;
 
-  const scroll = (e) => {
+  const scroll = () => {
     if (tabsRef.current) {
       const scrollTo = tabsRef.current.querySelectorAll("[data-scroll-to]");
       const targetTop = tabsRef.current.getBoundingClientRect().top;
 
-      scrollTo.forEach((element) => {
+      scrollTo.forEach((element: any) => {
         const sectionRect = element.getBoundingClientRect();
         const { top, bottom } = sectionRect;
 
@@ -32,10 +35,10 @@ function BurgerIngredients() {
   };
 
   const filteredArray = React.useMemo(() => {
-    const main = [];
-    const bun = [];
-    const sauce = [];
-    allIngredients.map((object) => {
+    const main: Array<IIngredientsPropTypes> = [];
+    const bun: Array<IIngredientsPropTypes> = [];
+    const sauce: Array<IIngredientsPropTypes> = [];
+    allIngredients.map((object: IIngredientsPropTypes) => {
       if (object.type === "main") {
         main.push(object);
       }
@@ -78,7 +81,7 @@ function BurgerIngredients() {
           </Tab>
         </div>
       </div>
-      {!allIngredientsRequest & allIngredients ? (
+      {(!allIngredientsRequest as any) & allIngredients ? (
         <Loader size="large" />
       ) : (
         <div

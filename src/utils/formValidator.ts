@@ -1,4 +1,4 @@
-export const formValidator = (target) => {
+export const formValidator = (target: HTMLInputElement) => {
   let isValid = false;
   switch (true) {
     case target.validity.tooShort:

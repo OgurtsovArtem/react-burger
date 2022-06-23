@@ -1,13 +1,17 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CLEAR_ORDER, getOrder } from "../../services/actions/constructor";
 import { Loader } from "../Loader/Loader";
 import icon from "../../icons/done_popup.svg";
 import OrderDetailsStyle from "./OrderDetails.module.css";
 
-function OrderDetails({ popupStatus }) {
-  const { orderStatus, orderLoader } = useSelector((state) => state.constructorBurger);
-  const dispatch = useDispatch();
+interface IOrderDetailsProps {
+  popupStatus: boolean;
+}
+
+const OrderDetails: FC<IOrderDetailsProps> = ({ popupStatus }) => {
+  const { orderStatus, orderLoader } = useSelector((state: any) => state.constructorBurger);
+  const dispatch: any = useDispatch();
   useEffect(() => {
     if (popupStatus) {
       dispatch(getOrder());
@@ -36,6 +40,6 @@ function OrderDetails({ popupStatus }) {
       )}
     </>
   );
-}
+};
 
 export default OrderDetails;
