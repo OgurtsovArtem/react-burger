@@ -13,3 +13,15 @@ export interface IIngredientsPropTypes {
   uniqId: string;
   qty: number;
 }
+
+export interface CustomResponse extends Body {
+  readonly headers: Headers;
+  readonly ok: boolean;
+  readonly redirected: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly type: ResponseType;
+  readonly url: string;
+  readonly checkResponse: any;
+  json(): any;
+}

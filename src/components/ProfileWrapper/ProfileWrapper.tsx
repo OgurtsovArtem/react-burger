@@ -2,9 +2,14 @@ import style from "./ProfileWrapper.module.css";
 import { NavLink } from "react-router-dom";
 import { signOut } from "../../services/actions/user";
 import { useDispatch } from "react-redux";
+import { FC } from "react";
 
-function ProfileWrapper({ children }) {
-  const dispatch = useDispatch();
+interface IProfileWrapperProps {
+  children?: React.ReactNode;
+}
+
+const ProfileWrapper: FC<IProfileWrapperProps> = ({ children }) => {
+  const dispatch: any = useDispatch();
   const logout = () => {
     dispatch(signOut());
   };
@@ -40,6 +45,6 @@ function ProfileWrapper({ children }) {
       <div className={style.content}>{children}</div>
     </div>
   );
-}
+};
 
 export default ProfileWrapper;

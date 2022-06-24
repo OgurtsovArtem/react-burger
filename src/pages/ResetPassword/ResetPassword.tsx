@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
 import style from "./ResetPassword.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
@@ -9,9 +9,8 @@ import { useHistory, useLocation, Redirect } from "react-router-dom";
 
 function ResetPassword() {
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<{ from: { pathname: string }; resetDone: boolean }>();
   const { state } = location;
-  console.log(location, state);
   const initialState = {
     token: "",
     password: "",
@@ -30,8 +29,8 @@ function ResetPassword() {
 
   const onIconClick = () => setShowPassword(!showPassword);
 
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     target.required = true;
@@ -48,7 +47,7 @@ function ResetPassword() {
     });
   };
 
-  const sendForm = (event) => {
+  const sendForm = (event: SyntheticEvent) => {
     event.preventDefault();
     console.log(formData);
     resetPassword(formData).then((res) => {

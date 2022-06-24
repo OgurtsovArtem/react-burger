@@ -1,20 +1,18 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import style from "./Registration.module.css";
+import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
+import style from "./ForgotPassword.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { registerUser } from "../../utils/api";
 import { formValidator } from "../../utils/formValidator";
+import { forgotPassword } from "../../utils/api";
+import { useHistory, useLocation } from "react-router-dom";
 
-function Registration() {
-  const { registerUserFailed, registerUserRequest } = useSelector((state) => state.user);
+function ForgotPassword() {
   const history = useHistory();
+  const location = useLocation();
+
   const initialState = {
-    name: "",
     email: "",
-    password: "",
   };
 
   const [formData, setFormData] = React.useState(initialState);
@@ -30,8 +28,8 @@ function Registration() {
 
   const onIconClick = () => setShowPassword(!showPassword);
 
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     target.required = true;
@@ -48,55 +46,42 @@ function Registration() {
     });
   };
 
-  const sendForm = (event) => {
+  const sendForm = (event: SyntheticEvent) => {
     event.preventDefault();
-    registerUser(formData).then((res) => console.log(res));
-    if (!registerUserRequest && !registerUserFailed) {
-      history.replace({ pathname: "/login" });
-    }
+    forgotPassword(formData).then((res) => {
+      if (res.success === true) {
+        history.replace({
+          pathname: "/reset-password",
+          state: { resetDone: location },
+        });
+      } else {
+        console.error(res.message);
+      }
+    });
   };
 
   return (
     <CenterWrapper>
       <form className={`${style.form}`} onSubmit={sendForm}>
-        <legend className={`${style.legend} text text_type_main-medium mb-6`}>Регистрация</legend>
-        <Input
-          type={"text"}
-          placeholder={"Имя"}
-          onChange={handleInputChange}
-          value={formData.name}
-          name={"name"}
-          error={!formErrors.name}
-          errorText={"Заполните поле"}
-          size={"default"}
-        />
+        <legend className={`${style.legend} text text_type_main-medium mb-6`}>
+          Восстановление пароля
+        </legend>
         <Input
           type={"email"}
-          placeholder={"E-mail"}
+          placeholder={"Укажите e-mail"}
           onChange={handleInputChange}
           value={formData.email}
           name={"email"}
           error={!formErrors.email}
+          onIconClick={onIconClick}
           errorText={"Некорректный E-mail"}
           size={"default"}
         />
-        <Input
-          type={showPassword ? "text" : "password"}
-          placeholder={"Пароль"}
-          onChange={handleInputChange}
-          icon={showPassword ? "HideIcon" : "ShowIcon"}
-          value={formData.password}
-          name={"password"}
-          error={!formErrors.password}
-          onIconClick={onIconClick}
-          errorText={"Неверный пароль"}
-          size={"default"}
-        />
         <Button type="primary" size="medium" disabled={buttonDisabled}>
-          Зарегистрироваться
+          Восстановить
         </Button>
         <div className={`${style.footnote} mb-4 mt-20`}>
-          <p className={style.text}>Уже зарегистрированы?</p>
+          <p className={style.text}>Вспомнили пароль?</p>
           <Link to="/login">Войти</Link>
         </div>
       </form>
@@ -104,4 +89,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default ForgotPassword;

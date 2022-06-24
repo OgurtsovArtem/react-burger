@@ -3,8 +3,8 @@ import { Redirect, Route, useLocation } from "react-router-dom";
 import { Loader } from "./Loader/Loader";
 
 export function ProtectedRoute({ onlyUnAuth = false, ...rest }) {
-  const { sending, data } = useSelector((store) => store.user);
-  const location = useLocation();
+  const { sending, data } = useSelector((store: any) => store.user);
+  const location = useLocation<{ from: Location }>();
   if (sending) {
     return <Loader size="large" />;
   }

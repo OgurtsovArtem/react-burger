@@ -1,8 +1,11 @@
 import { MAIN_URL } from "./rootConstants";
 import { getCookie, setCookie } from "./utils";
+import { CustomResponse } from "./types";
 
-const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+const checkResponse = async (res: Promise<CustomResponse>) => {
+  return (await res).ok
+    ? (await res).json()
+    : (await res).json().then((err: object) => Promise.reject(err));
 };
 
 export const refreshToken = () => {
@@ -17,7 +20,10 @@ export const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (
+  url: RequestInfo | URL,
+  options: RequestInit | undefined
+) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
@@ -38,7 +44,7 @@ export const fetchWithRefresh = async (url, options) => {
   }
 };
 
-export const forgotPassword = (data) => {
+export const forgotPassword = (data: { email: string }) => {
   return fetchWithRefresh(`${MAIN_URL}/password-reset`, {
     method: "POST",
     headers: {
@@ -48,7 +54,7 @@ export const forgotPassword = (data) => {
   });
 };
 
-export const resetPassword = (data) => {
+export const resetPassword = (data: { token: string; password: string }) => {
   return fetchWithRefresh(`${MAIN_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -58,7 +64,7 @@ export const resetPassword = (data) => {
   });
 };
 
-export const registerUser = (data) => {
+export const registerUser = (data: { name: string; email: string; password: string }) => {
   return fetch(`${MAIN_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -79,7 +85,7 @@ export const getUser = () => {
   });
 };
 
-export const updateUser = (data) => {
+export const updateUser = (data: any) => {
   return fetchWithRefresh(`${MAIN_URL}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -90,7 +96,7 @@ export const updateUser = (data) => {
   });
 };
 
-export const login = (data) => {
+export const login = (data: any) => {
   return fetch(`${MAIN_URL}/auth/login`, {
     method: "POST",
     headers: {
