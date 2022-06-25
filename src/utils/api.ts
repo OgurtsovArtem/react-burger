@@ -1,8 +1,7 @@
 import { MAIN_URL } from "./rootConstants";
 import { getCookie, setCookie } from "./utils";
-import { CustomResponse } from "./types";
 
-const checkResponse = async (res: Promise<CustomResponse>) => {
+const checkResponse = async (res: Response) => {
   return (await res).ok
     ? (await res).json()
     : (await res).json().then((err: object) => Promise.reject(err));
@@ -21,21 +20,21 @@ export const refreshToken = () => {
 };
 
 export const fetchWithRefresh = async (
-  url: RequestInfo | URL,
-  options: RequestInit | undefined
+  url: string,
+  options: any
 ) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if (err.message === "jwt expired") {
+    if (err instanceof Error && err.message === "jwt expired") {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
         Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", refreshData.accessToken);
-      options.headers.Authorization = refreshData.accessToken;
+      options.headers.Authorization  = refreshData.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
@@ -85,7 +84,7 @@ export const getUser = () => {
   });
 };
 
-export const updateUser = (data: any) => {
+export const updateUser = (data: {  email: string; }) => {
   return fetchWithRefresh(`${MAIN_URL}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -96,7 +95,7 @@ export const updateUser = (data: any) => {
   });
 };
 
-export const login = (data: any) => {
+export const login = (data: { name: string; password: string  }) => {
   return fetch(`${MAIN_URL}/auth/login`, {
     method: "POST",
     headers: {
