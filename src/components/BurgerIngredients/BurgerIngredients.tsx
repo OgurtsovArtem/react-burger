@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
+import { useInView } from "react-intersection-observer";
 import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
@@ -7,37 +8,41 @@ import { Loader } from "../Loader/Loader";
 import { IIngredientsPropTypes } from "../../utils/types";
 
 function BurgerIngredients() {
-  const [current, setCurrent] = React.useState("one");
+  const [current, setCurrent] = React.useState("buns");
   const { allIngredients, allIngredientsRequest } = useSelector(
     (state: any): any => state.ingredients
   );
-  const tabsRef = useRef<HTMLInputElement>(null);
-  let visibleSection = current;
+  const [bunsRef, inViewBuns] = useInView({
+    threshold: 0,
+  });
+  const [mainsRef, inViewMain] = useInView({
+    threshold: 0,
+  });
+  const [sausesRef, inViewSauses] = useInView({
+    threshold: 0,
+  });
 
-  const scroll = () => {
-    if (tabsRef.current) {
-      const scrollTo = tabsRef.current.querySelectorAll("[data-scroll-to]");
-      const targetTop = tabsRef.current.getBoundingClientRect().top;
-
-      scrollTo.forEach((element: any) => {
-        const sectionRect = element.getBoundingClientRect();
-        const { top, bottom } = sectionRect;
-
-        if (top <= targetTop && bottom >= targetTop) {
-          visibleSection = element.getAttribute("data-scroll-to");
-        }
-      });
-
-      if (visibleSection !== current) {
-        setCurrent(visibleSection);
-      }
+  React.useEffect(() => {
+    if (inViewBuns) {
+      setCurrent("buns");
+    } else if (inViewSauses) {
+      setCurrent("sauces");
+    } else if (inViewMain) {
+      setCurrent("mains");
     }
+  }, [inViewBuns, inViewMain, inViewSauses]);
+
+  const onTabClick = (tab: string) => {
+    setCurrent(tab);
+    const element = document.getElementById(tab);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
   const filteredArray = React.useMemo(() => {
     const main: Array<IIngredientsPropTypes> = [];
     const bun: Array<IIngredientsPropTypes> = [];
     const sauce: Array<IIngredientsPropTypes> = [];
+
     allIngredients.map((object: IIngredientsPropTypes) => {
       if (object.type === "main") {
         main.push(object);
@@ -66,17 +71,17 @@ function BurgerIngredients() {
 
       <div className={BurgerIngredientsStyle.tabs}>
         <div>
-          <Tab value="one" active={current === "one"} onClick={setCurrent}>
+          <Tab value="buns" active={current === "buns"} onClick={onTabClick}>
             Булки
           </Tab>
         </div>
         <div>
-          <Tab value="two" active={current === "two"} onClick={setCurrent}>
+          <Tab value="sauces" active={current === "sauces"} onClick={onTabClick}>
             Соусы
           </Tab>
         </div>
         <div>
-          <Tab value="three" active={current === "three"} onClick={setCurrent}>
+          <Tab value="mains" active={current === "mains"} onClick={onTabClick}>
             Начинки
           </Tab>
         </div>
@@ -84,13 +89,9 @@ function BurgerIngredients() {
       {(!allIngredientsRequest as any) & allIngredients ? (
         <Loader size="large" />
       ) : (
-        <div
-          ref={tabsRef}
-          onScroll={scroll}
-          className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}
-        >
+        <div className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}>
           <div className={`${BurgerIngredientsStyle.chapter}`}>
-            <div data-scroll-to="one">
+            <div ref={bunsRef} id="buns">
               <h2 className={`text text_type_main-medium  mb-6`}>Булки</h2>
               <div className={`${BurgerIngredientsStyle.chapterList} ml-4 mt-6 mr-2`}>
                 {filteredArray.bun.map((object) => {
@@ -98,7 +99,7 @@ function BurgerIngredients() {
                 })}
               </div>
             </div>
-            <div data-scroll-to="two">
+            <div ref={sausesRef} id="sauces">
               <h2
                 className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
               >
@@ -111,7 +112,7 @@ function BurgerIngredients() {
               </div>
             </div>
 
-            <div data-scroll-to="three">
+            <div ref={mainsRef} id="mains">
               <h2
                 className={`${BurgerIngredientsStyle.chapterTitle} text text_type_main-medium mt-10 mb-6`}
               >
