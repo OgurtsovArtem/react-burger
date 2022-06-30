@@ -1,8 +1,12 @@
 import { useSelector } from "react-redux";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Redirect, Route, useLocation, RouteProps } from "react-router-dom";
 import { Loader } from "./Loader/Loader";
 
-export function ProtectedRoute({ onlyUnAuth = false, ...rest }) {
+type TProtectedRoute = {
+  onlyUnAuth?: boolean;
+} & RouteProps;
+
+export function ProtectedRoute({ onlyUnAuth = false, ...rest }: TProtectedRoute) {
   const { sending, data } = useSelector((store: any) => store.user);
   const location = useLocation<{ from: Location }>();
   if (sending) {
