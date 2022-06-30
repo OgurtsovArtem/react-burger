@@ -1,13 +1,13 @@
 import styles from "./Page404.module.css";
-import { useHistory } from "react-router-dom";
-import { useCallback } from "react";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+// import { useHistory } from "react-router-dom";
+// import { useCallback } from "react";
+// import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export function Page404() {
-  const history = useHistory();
-  const onClick = useCallback(() => {
-    history.replace({ pathname: "/" });
-  }, [history]);
+  // const history = useHistory();
+  // const onClick = useCallback(() => {
+  //   history.replace({ pathname: "/" });
+  // }, [history]);
 
   return (
     <div className={styles.main}>

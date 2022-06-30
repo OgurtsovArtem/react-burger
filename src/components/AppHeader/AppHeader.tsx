@@ -19,7 +19,8 @@ import mobileLogo from "../../icons/logo_mobile.svg";
 import { useSelector } from "react-redux";
 
 function AppHeader() {
-  const { isAuthCheck, data } = useSelector((store) => store.user);
+  const { isAuthCheck, data } = useSelector((store: any) => store.user);
+
   const [menuActive, setMenuActive] = React.useState(false);
   const [listActive, setListActive] = React.useState(false);
 

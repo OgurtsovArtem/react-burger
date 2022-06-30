@@ -1,6 +1,11 @@
-import PropTypes from "prop-types";
+import { FC } from "react";
 import style from "./Loader.module.css";
 import { LoaderSvg } from "./loader.svg";
+
+interface Iloader {
+  size: "small" | "medium" | "large";
+  inverse?: boolean;
+}
 
 const loaderSizes = {
   small: 16,
@@ -8,7 +13,7 @@ const loaderSizes = {
   large: 40,
 };
 
-export const Loader = ({ size, inverse = false }) => {
+export const Loader: FC<Iloader> = ({ size, inverse = false }) => {
   const loaderColor = inverse ? "#fff" : "#3C39EC";
 
   const wrapperStyleKey = "wrapper_" + size;
@@ -17,9 +22,4 @@ export const Loader = ({ size, inverse = false }) => {
       <LoaderSvg color={loaderColor} size={loaderSizes[size]} />
     </div>
   );
-};
-
-Loader.propTypes = {
-  size: PropTypes.string.isRequired,
-  inverse: PropTypes.bool,
 };

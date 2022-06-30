@@ -1,5 +1,6 @@
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../ProtectedRoute";
+import { Location } from "history";
 
 import AppHeader from "../AppHeader/AppHeader";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
@@ -22,8 +23,8 @@ import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
   const history = useHistory();
-  const location = useLocation();
-  const dispatch = useDispatch();
+  const location = useLocation<{ background: Location }>();
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());

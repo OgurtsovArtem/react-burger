@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
 import style from "./Login.module.css";
 import CenterWrapper from "../../components/CenterWrapper/CenterWrapper";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ function Login() {
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     Object.values(formErrors).every((item) => item)
@@ -29,8 +29,8 @@ function Login() {
 
   const onIconClick = () => setShowPassword(!showPassword);
 
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     target.required = true;
@@ -45,7 +45,7 @@ function Login() {
       [name]: error,
     });
   };
-  const sendForm = (event) => {
+  const sendForm = (event: SyntheticEvent) => {
     event.preventDefault();
     dispatch(signIn(formData));
   };

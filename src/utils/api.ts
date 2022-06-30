@@ -1,8 +1,10 @@
 import { MAIN_URL } from "./rootConstants";
 import { getCookie, setCookie } from "./utils";
 
-const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+const checkResponse = async (res: Response) => {
+  return (await res).ok
+    ? (await res).json()
+    : (await res).json().then((err: object) => Promise.reject(err));
 };
 
 export const refreshToken = () => {
@@ -17,19 +19,22 @@ export const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (
+  url: string,
+  options: any
+) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if (err.message === "jwt expired") {
+    if (err instanceof Error && err.message === "jwt expired") {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
         Promise.reject(refreshData);
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", refreshData.accessToken);
-      options.headers.Authorization = refreshData.accessToken;
+      options.headers.Authorization  = refreshData.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
@@ -38,7 +43,7 @@ export const fetchWithRefresh = async (url, options) => {
   }
 };
 
-export const forgotPassword = (data) => {
+export const forgotPassword = (data: { email: string }) => {
   return fetchWithRefresh(`${MAIN_URL}/password-reset`, {
     method: "POST",
     headers: {
@@ -48,7 +53,7 @@ export const forgotPassword = (data) => {
   });
 };
 
-export const resetPassword = (data) => {
+export const resetPassword = (data: { token: string; password: string }) => {
   return fetchWithRefresh(`${MAIN_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -58,7 +63,7 @@ export const resetPassword = (data) => {
   });
 };
 
-export const registerUser = (data) => {
+export const registerUser = (data: { name: string; email: string; password: string }) => {
   return fetch(`${MAIN_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -79,7 +84,7 @@ export const getUser = () => {
   });
 };
 
-export const updateUser = (data) => {
+export const updateUser = (data: {  email: string; }) => {
   return fetchWithRefresh(`${MAIN_URL}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -90,7 +95,7 @@ export const updateUser = (data) => {
   });
 };
 
-export const login = (data) => {
+export const login = (data: { name: string; password: string  }) => {
   return fetch(`${MAIN_URL}/auth/login`, {
     method: "POST",
     headers: {
