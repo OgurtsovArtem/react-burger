@@ -9,6 +9,7 @@ type TProtectedRoute = {
 export function ProtectedRoute({ onlyUnAuth = false, ...rest }: TProtectedRoute) {
   const { sending, data } = useSelector((store: any) => store.user);
   const location = useLocation<{ from: Location }>();
+
   if (sending) {
     return <Loader size="large" />;
   }
