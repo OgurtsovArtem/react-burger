@@ -5,14 +5,23 @@ import {
   CLEAR_ORDER
 } from '../actions/constructor';
 
-const initialState = {
+import { TConstructorActions } from '../actions/constructor';
+
+type TConstructorListState = {
+  orderStatus: object;
+  orderRequest: boolean;
+  orderLoader: boolean;
+  orderFailed: boolean;
+} 
+
+const initialState: TConstructorListState = {
   orderStatus: {},
   orderRequest: true,
   orderLoader: true,
   orderFailed: false,
 }
 
-export const constructorBurgerReducer = (state = initialState, action) => {
+export const constructorBurgerReducer = (state = initialState, action: TConstructorActions): TConstructorListState => {
 switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {

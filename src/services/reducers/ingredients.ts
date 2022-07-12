@@ -1,3 +1,5 @@
+import { IIngredientsPropTypes } from "../../utils/types";
+import { TIngredientsActions } from "../actions/ingredients";
 import {
   GET_ALL_INGREDIENTS_REQUEST,
   GET_ALL_INGREDIENTS_FAILED,
@@ -12,17 +14,28 @@ import {
   CHANGE_ITEM,
 } from "../actions/ingredients";
 
-const initialState = {
+
+type TIngredientsState = {
+  allIngredients: IIngredientsPropTypes[];
+  allIngredientsRequest: boolean;
+  allIngredientsFailed: boolean;
+
+  addedIngredients: IIngredientsPropTypes[];
+  detailIngredients: IIngredientsPropTypes[] | any;
+  bun : IIngredientsPropTypes[];
+} 
+
+const initialState: TIngredientsState = {
   allIngredients: [],
   allIngredientsRequest: false,
   allIngredientsFailed: false,
 
   addedIngredients: [],
-  detailIngredients: null,
+  detailIngredients: [],
   bun: [],
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
   switch (action.type) {
     case GET_ALL_INGREDIENTS_REQUEST: {
       return {
@@ -48,20 +61,20 @@ export const ingredientsReducer = (state = initialState, action) => {
     case SET_DETAIL_INGREDIENTS: {
       return {
         ...state,
-        detailIngredients: [...state.allIngredients].find((item) => item._id === action._id),
+        detailIngredients:  [...state.allIngredients ].find((item) => item._id === action._id) ,
       };
     }
     case DELETE_DETAIL_INGREDIENTS: {
       return {
         ...state,
-        detailIngredients: {},
+        detailIngredients: [],
       };
     }
 
     case DECREASE_ITEM: {
       return {
         ...state,
-        allIngredients: state.allIngredients.map((item) =>
+        allIngredients: state.allIngredients.map((item: any) =>
           item._id === action.id ? { ...item, qty: --item.qty || 0 } : item
         ),
       };
@@ -69,7 +82,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case INCREASE_ITEM: {
       return {
         ...state,
-        allIngredients: state.allIngredients.map((item) =>
+        allIngredients: state.allIngredients.map((item: any) =>
           item._id === action.id ? { ...item, qty: ++item.qty || 1 } : item
         ),
       };
@@ -86,13 +99,13 @@ export const ingredientsReducer = (state = initialState, action) => {
         addedIngredients: [
           ...state.addedIngredients,
           ...state.allIngredients
-            .map((item) => {
+            .map((item: any) => {
               if (item._id === action.id) {
                 return { ...item, order: action.index, uniqId: action.uniqId };
               }
               return false;
             })
-            .filter((item) => item !== false),
+            .filter((item: any) => item !== false),
         ],
       };
     }
@@ -100,7 +113,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         addedIngredients: state.addedIngredients
-          .map((item) => {
+          .map((item: IIngredientsPropTypes) => {
             if (item.uniqId === action.dragId) {
               return { ...item, order: action.hoverIndex };
             }
@@ -109,15 +122,15 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
             return item;
           })
-          .sort((prev, next) => (prev.order > next.order ? 1 : -1)),
+          .sort((prev: {order: number}, next: {order: number}) => (prev.order > next.order ? 1 : -1)),
       };
     }
 
     case ADD_BUN: {
       return {
         ...state,
-        bun: [...state.allIngredients.filter((item) => item._id === action.id)],
-        allIngredients: state.allIngredients.map((item) => {
+        bun: [...state.allIngredients.filter((item: any) => item._id === action.id)],
+        allIngredients: state.allIngredients.map((item: any) => {
           if (item.type === "bun") {
             return item._id === action.id ? { ...item, qty: 2 } : { ...item, qty: null };
           }

@@ -1,3 +1,4 @@
+import { IUserTypes } from '../../utils/types';
 import {
   AUTH_CHECKED,
   USER_LOGOUT,
@@ -17,9 +18,31 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_FAILED,
   UPDATE_USER_SUCCESS,
+  TUserActions,
 } from '../actions/user';
 
-const initialState = {
+
+type TUserState = {
+  isAuthCheck: boolean,
+
+  sending: boolean,
+
+  data:  null | IUserTypes,
+
+  loginUserFailed: null | string,
+  loginUserRequest: boolean,
+
+  registerUserFailed: null | string,
+  registerUserRequest: boolean,
+
+  getUserFailed: null | string,
+  getUserRequest: boolean,
+
+  updateUserFailed: null | string,
+  updateUserRequest: boolean,
+} 
+
+const initialState: TUserState = {
   isAuthCheck: false,
 
   sending: false,
@@ -39,7 +62,7 @@ const initialState = {
   updateUserRequest: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
 switch (action.type) {
   case AUTH_CHECKED: {
     return {

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import IngredientsCardStyle from "./IngredientsCard.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { DELETE_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";

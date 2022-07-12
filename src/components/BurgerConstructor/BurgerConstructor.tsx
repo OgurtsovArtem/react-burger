@@ -4,7 +4,7 @@ import {
   CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { ADD_ITEM, INCREASE_ITEM, ADD_BUN } from "../../services/actions/ingredients";
 import BasketCard from "../BasketCard/BasketCard";
 import OrderDetails from "../OrderDetails/OrderDetails";

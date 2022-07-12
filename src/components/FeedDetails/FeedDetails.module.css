@@ -1,0 +1,36 @@
+.scroll {
+  height: calc(100vh - (var(--header-height) + 600px));
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price {
+  margin-left: auto;
+}
+.footer{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.status {
+
+}
+.status_done {
+  composes: status;
+  color: var(--colors-interface-success);
+}
+.status_wait {
+  composes: status;
+  color: var(--text-primary-color);
+}
+.status_reject {
+  composes: status;
+  color: var(--colors-interface-error);
+}

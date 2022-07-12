@@ -1,6 +1,6 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import IngredientsCard from "../IngredientsCard/IngredientsCard";
@@ -10,7 +10,7 @@ import { IIngredientsPropTypes } from "../../utils/types";
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");
   const { allIngredients, allIngredientsRequest } = useSelector(
-    (state: any): any => state.ingredients
+    (state) => state.ingredients
   );
   const [bunsRef, inViewBuns] = useInView({
     threshold: 0,
@@ -86,7 +86,7 @@ function BurgerIngredients() {
           </Tab>
         </div>
       </div>
-      {(!allIngredientsRequest as any) & allIngredients ? (
+      {(!allIngredientsRequest as any) & allIngredients as any ? (
         <Loader size="large" />
       ) : (
         <div className={`${BurgerIngredientsStyle.products} custom-scrollbar mt-10`}>

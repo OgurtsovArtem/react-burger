@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { CLEAR_ORDER, getOrder } from "../../services/actions/constructor";
 import { Loader } from "../Loader/Loader";
 import icon from "../../icons/done_popup.svg";

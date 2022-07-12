@@ -1,7 +1,7 @@
 import style from "./ProfileWrapper.module.css";
 import { NavLink } from "react-router-dom";
 import { signOut } from "../../services/actions/user";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { FC } from "react";
 
 interface IProfileWrapperProps {
