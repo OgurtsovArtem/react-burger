@@ -4,16 +4,16 @@ import styles from "./OrderFeed.module.css";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { Loader } from "../../components/Loader/Loader";
 import { useEffect } from "react";
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/action-types";
+import { WsConnectionClose, WsConnectionStart } from "../../services/actions/wsActions";
 
 function OrderFeed() {
   const {data} = useSelector(store => store.ws)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch(WsConnectionStart());
     return(() => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(WsConnectionClose());
     })
   }, [dispatch]);
   

@@ -30,16 +30,16 @@ const BUTTON_STATUS_NAME = {
 function BurgerConstructor() {
   const [activeBody, setActiveBody] = React.useState<boolean>(false);
   const [count, setCount] = React.useState<number>(0);
+  const [activePopup, setActivePopup] = React.useState<boolean>(false);
   const [mobile, setMobile] = React.useState<boolean>(
     window.matchMedia("(max-width: 1035px)").matches
   );
-  const [activePopup, setActivePopup] = React.useState<boolean>(false);
 
-  const { isAuthCheck } = useSelector((store: any) => store.user);
-  const { addedIngredients, bun } = useSelector((store: any) => store.ingredients);
+  const { isAuthCheck } = useSelector((store) => store.user);
+  const { addedIngredients, bun } = useSelector((store) => store.ingredients);
 
-  const ingredientsPrice = addedIngredients.reduce((acc: any, item: any) => acc + item.price, 0);
-  const bunPrice = bun.reduce((acc: any, item: any) => acc + item.price * 2, 0);
+  const ingredientsPrice = addedIngredients.reduce((acc, item) => acc + item.price, 0);
+  const bunPrice = bun.reduce((acc, item) => acc + item.price * 2, 0);
   const totalPrice = ingredientsPrice + bunPrice;
 
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ function BurgerConstructor() {
     });
     dispatch({ type: INCREASE_ITEM, id: item.id });
   };
-  const addBun = (item: any) => {
+  const addBun = (item: { id: string }) => {
     dispatch({ type: ADD_BUN, id: item.id });
   };
 
@@ -100,7 +100,7 @@ function BurgerConstructor() {
     <>
       {activePopup && (
         <Modal onClose={changePopupStatus}>
-          <OrderDetails popupStatus={activePopup} />
+          <OrderDetails popupStatus={activePopup}/>
         </Modal>
       )}
 

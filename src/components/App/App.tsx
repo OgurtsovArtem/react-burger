@@ -17,7 +17,7 @@ import {
   Ingredient,
 } from "../../pages";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { checkUserAuth } from "../../services/actions/user";
 import { getIngredients } from "../../services/actions/ingredients";
 import OrderFeed from "../../pages/OrderFeed/OrderFeed";
@@ -27,7 +27,7 @@ import FeedModal from "../FeedModal/FeedModal";
 function App() {
   const history = useHistory();
   const location = useLocation<{ background: Location }>();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());

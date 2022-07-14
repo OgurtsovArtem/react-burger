@@ -3,7 +3,7 @@ import styles from './ScrollWrapper.module.css';
 
 interface IScrollWrapperProps {
   children?: React.ReactNode;
-  style?: any;
+  style?: string;
 }
 
 const ScrollWrapper: FC<IScrollWrapperProps> = ({children, style}) => {

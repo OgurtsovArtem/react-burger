@@ -21,7 +21,7 @@ type TIngredientsState = {
   allIngredientsFailed: boolean;
 
   addedIngredients: IIngredientsPropTypes[];
-  detailIngredients: IIngredientsPropTypes[] | any;
+  detailIngredients: IIngredientsPropTypes | null | undefined;
   bun : IIngredientsPropTypes[];
 } 
 
@@ -31,7 +31,7 @@ const initialState: TIngredientsState = {
   allIngredientsFailed: false,
 
   addedIngredients: [],
-  detailIngredients: [],
+  detailIngredients: null,
   bun: [],
 };
 
@@ -67,14 +67,14 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
     case DELETE_DETAIL_INGREDIENTS: {
       return {
         ...state,
-        detailIngredients: [],
+        detailIngredients: null,
       };
     }
 
     case DECREASE_ITEM: {
       return {
         ...state,
-        allIngredients: state.allIngredients.map((item: any) =>
+        allIngredients: state.allIngredients.map((item) =>
           item._id === action.id ? { ...item, qty: --item.qty || 0 } : item
         ),
       };
@@ -82,7 +82,7 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
     case INCREASE_ITEM: {
       return {
         ...state,
-        allIngredients: state.allIngredients.map((item: any) =>
+        allIngredients: state.allIngredients.map((item) =>
           item._id === action.id ? { ...item, qty: ++item.qty || 1 } : item
         ),
       };
@@ -98,14 +98,14 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
         ...state,
         addedIngredients: [
           ...state.addedIngredients,
-          ...state.allIngredients
-            .map((item: any) => {
+          ...state.allIngredients 
+            .map((item):any => {
               if (item._id === action.id) {
                 return { ...item, order: action.index, uniqId: action.uniqId };
               }
-              return false;
+              return false
             })
-            .filter((item: any) => item !== false),
+            .filter((item) => item !== false),
         ],
       };
     }
@@ -129,10 +129,10 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
     case ADD_BUN: {
       return {
         ...state,
-        bun: [...state.allIngredients.filter((item: any) => item._id === action.id)],
-        allIngredients: state.allIngredients.map((item: any) => {
+        bun: [...state.allIngredients.filter((item) => item._id === action.id)],
+        allIngredients: state.allIngredients.map((item) => {
           if (item.type === "bun") {
-            return item._id === action.id ? { ...item, qty: 2 } : { ...item, qty: null };
+            return item._id === action.id ? { ...item, qty: 2 } : { ...item, qty: 0 };
           }
           return item;
         }),

@@ -1,16 +1,18 @@
 import { MAIN_URL } from '../../utils/rootConstants';
 import { AppDispatch, IIngredientsPropTypes } from '../../utils/types';
+import { getCookie } from '../../utils/utils';
 
 export const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
 export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
 export const CLEAR_ORDER: 'CLEAR_ORDER' = 'CLEAR_ORDER';
 
-const body= { 
-  "ingredients": ["60d3b41abdacab0026a733c7","60d3b41abdacab0026a733c6"]
-} 
-
-export function getOrder() {
+export function getOrder(ingredients: string[]): any {
+  const token = getCookie('accessToken');
+  if (!token) {
+    console.error("token nof found")
+    return
+  }
   return function(dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST
@@ -18,9 +20,10 @@ export function getOrder() {
     fetch(`${MAIN_URL}/orders`,{
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: token.split(' ')[1],
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify({"ingredients": ingredients})
     })
       .then((res) => {
         if (!res.ok) {

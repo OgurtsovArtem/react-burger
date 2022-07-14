@@ -3,7 +3,7 @@ import { Loader } from "../../components/Loader/Loader";
 import OrderCard from "../../components/OrderCard/OrderCard";
 import ProfileWrapper from "../../components/ProfileWrapper/ProfileWrapper";
 import ScrollWrapper from "../../components/ScrollWrapper/ScrollWrapper";
-import { WS_CONNECTION_USER_START, WS_CONNECTION_CLOSED } from "../../services/action-types";
+import { WsConnectionClose, WsConnectionUserStart } from "../../services/actions/wsActions";
 import { useDispatch, useSelector } from "../../services/hooks";
 import styles from './ProfileOrders.module.css'
 
@@ -13,9 +13,9 @@ function ProfileOrders() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_USER_START });
+    dispatch(WsConnectionUserStart());
     return(() => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(WsConnectionClose());
     })
   }, [dispatch]);
 
@@ -29,7 +29,7 @@ function ProfileOrders() {
       ) : (
           <>
         {data.orders.map((item, index)=> {
-          return <OrderCard key={index} data={item}/>
+          return <OrderCard key={index} data={item}  pathname={'/profile/orders/'}/>
         })}
           </>
       )}

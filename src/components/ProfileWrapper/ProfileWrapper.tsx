@@ -9,7 +9,7 @@ interface IProfileWrapperProps {
 }
 
 const ProfileWrapper: FC<IProfileWrapperProps> = ({ children }) => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const logout = () => {
     dispatch(signOut());
   };

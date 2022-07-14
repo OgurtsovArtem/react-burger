@@ -27,7 +27,7 @@ type TUserState = {
 
   sending: boolean,
 
-  data:  null | IUserTypes,
+  data: IUserTypes | null,
 
   loginUserFailed: null | string,
   loginUserRequest: boolean,

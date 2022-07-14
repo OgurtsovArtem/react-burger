@@ -8,8 +8,8 @@ interface IOrderListProps {
 
 const OrderInfo: FC<IOrderListProps> = ({data}) => {
 
-  const InWork = data.orders.slice(0, 20).filter((item: { status: string; }) => item.status === 'pending');
-  const Done =  data.orders.slice(0, 20).filter((item: { status: string; }) => item.status === 'done');
+  const InWork: IOrder[] = data.orders.slice(0, 20).filter((item: { status: string; }) => item.status === 'pending');
+  const Done: IOrder[] =  data.orders.slice(0, 20).filter((item: { status: string; }) => item.status === 'done');
 
   return (
     <div className={styles.section}>
@@ -17,7 +17,7 @@ const OrderInfo: FC<IOrderListProps> = ({data}) => {
         <div className={styles.column}>
           <h2 className={`${styles.title} text text_type_main-medium`}>Готовы:</h2>
           <ul className={styles.numbers}>
-            {Done.map((item: any,index: Key | null | undefined) => {
+            {Done.map((item ,index: Key | null | undefined) => {
              return <li className={`${styles.number_accent} text text_type_digits-default`} key={index}>{item.number}</li>
             })}
           </ul>
@@ -25,7 +25,7 @@ const OrderInfo: FC<IOrderListProps> = ({data}) => {
         <div className={styles.column}>
           <h2 className={`${styles.title} text text_type_main-medium`}>В работе:</h2>
           <ul className={styles.numbers}>
-            {InWork.map((item: any,index: Key | null | undefined) => {
+            {InWork.map((item ,index: Key | null | undefined) => {
               return <li className={`${styles.number} text text_type_digits-default`} key={index}>{item.number}</li>
               })}
           </ul>

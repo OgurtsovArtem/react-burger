@@ -8,7 +8,7 @@ import {
 import { TConstructorActions } from '../actions/constructor';
 
 type TConstructorListState = {
-  orderStatus: object;
+  orderStatus: any;
   orderRequest: boolean;
   orderLoader: boolean;
   orderFailed: boolean;
