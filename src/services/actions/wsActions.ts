@@ -5,15 +5,16 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
-  WS_USER_CONNECTION_CLOSED,
   WS_GET_ALL_ORDERS,
 } from '../action-types';
 
 export interface  wsConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
+  readonly payload: string;
 };
 export interface  wsConnectionUserStart {
   readonly type: typeof WS_CONNECTION_USER_START;
+  readonly payload: string;
 };
 
 export interface  wsConnectionSuccess  {
@@ -28,10 +29,6 @@ export interface wsConnectionClosed  {
   readonly type: typeof WS_CONNECTION_CLOSED;
 };
 
-export interface wsUserConnectionClosed  {
-  readonly type: typeof WS_USER_CONNECTION_CLOSED;
-};
-
 export interface wsGetAllOrders{
     readonly type: typeof WS_GET_ALL_ORDERS;
     readonly payload: IOrders<IOrder>;
@@ -40,10 +37,12 @@ export interface wsGetAllOrders{
 
 export const WsConnectionStart = (): wsConnectionStart => ({
   type: WS_CONNECTION_START,
+  payload: '/all',
 });
 
 export const WsConnectionUserStart = (): wsConnectionUserStart => ({
   type: WS_CONNECTION_USER_START,
+  payload: '',
 });
 
 export const WsConnectionClose = (): wsConnectionClosed => ({
@@ -56,5 +55,4 @@ export type TWsActions =
     | wsConnectionSuccess
     | wsConnectionError
     | wsConnectionClosed
-    | wsUserConnectionClosed
     | wsGetAllOrders;

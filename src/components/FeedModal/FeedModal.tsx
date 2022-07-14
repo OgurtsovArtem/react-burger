@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 const FeedModal= () => {
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.ws)
+
   const location: {state: {background: unknown}} = useLocation();
 
   useEffect(() => {

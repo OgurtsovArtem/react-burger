@@ -4,15 +4,15 @@ import type { AnyAction, Middleware, MiddlewareAPI } from 'redux';
 import type { AppDispatch, RootState, TWsMiddlewareActions } from '../../utils/types';
 import { getCookie } from '../../utils/utils';
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWsMiddlewareActions, payload: string): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWsMiddlewareActions): Middleware => {
     return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
         let token: string | undefined = undefined;
 
         return (next) => async (action: AnyAction) => {
             const { dispatch } = store;
-            const { type } = action;
-            const { wsInit, wsUserInit} = wsActions;
+            const { type, payload } = action;
+            const { wsInit, wsUserInit, onOpen, onError, onMessage, onClose} = wsActions;
 
             if (type === wsInit) {
                 socket = new WebSocket(`${wsUrl}${payload}`);
@@ -32,12 +32,12 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsMiddlewareActions,
                       // функция, которая вызывается при открытии сокета
               socket.onopen = event => {
                 console.log('wsConnect')
-                dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
+                dispatch({ type: onOpen });
               };
 
                       // функция, которая вызывается при ошибке соединения
               socket.onerror = event => {
-                dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
+                dispatch({ type: onError });
               };
 
                       // функция, которая вызывается при получения события от сервера
@@ -45,13 +45,12 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsMiddlewareActions,
                 const { data } = event;
                 const parsedData = JSON.parse(data);
                 console.log('wsConnectMessage')
-                dispatch({ type: 'WS_GET_ALL_ORDERS', payload: parsedData });         
+                dispatch({ type: onMessage, payload: parsedData });         
 
               };
                       // функция, которая вызывается при закрытии соединения
               socket.onclose = event => {
-                console.log('close')
-                dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event })
+                dispatch({ type: onClose })
               };
             }
 

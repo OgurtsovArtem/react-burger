@@ -19,7 +19,7 @@ export const initStore = (initialState = {}) =>
   createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(thunkMiddleware,socketMiddleware(`${WS_ORDER_URL}`, wsActions, `/all`)))
+    compose(applyMiddleware(thunkMiddleware,socketMiddleware(WS_ORDER_URL, wsActions)))
   );
   
 export const store = initStore();

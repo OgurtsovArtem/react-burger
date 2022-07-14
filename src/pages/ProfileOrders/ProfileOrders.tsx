@@ -27,11 +27,11 @@ function ProfileOrders() {
       {!data ? (
         <Loader size="large" />
       ) : (
-          <>
-        {data.orders.map((item, index)=> {
-          return <OrderCard key={index} data={item}  pathname={'/profile/orders/'}/>
-        })}
-          </>
+        <>
+          {data.orders.map((item, index)=> {
+            return <OrderCard key={index} data={item}  pathname={'/profile/orders/'}/>
+          })}
+        </>
       )}
 
       </ScrollWrapper>

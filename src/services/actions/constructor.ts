@@ -7,7 +7,7 @@ export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
 export const CLEAR_ORDER: 'CLEAR_ORDER' = 'CLEAR_ORDER';
 
-export function getOrder(ingredients: string[]): any {
+export function getOrder(ingredientsArr: string[]): any {
   const token = getCookie('accessToken');
   if (!token) {
     console.error("token nof found")
@@ -17,13 +17,13 @@ export function getOrder(ingredients: string[]): any {
     dispatch({
       type: GET_ORDER_REQUEST
     });
-    fetch(`${MAIN_URL}/orders`,{
+    fetch(`${MAIN_URL}/orders/`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token.split(' ')[1],
+        Authorization: token,
       },
-      body: JSON.stringify({"ingredients": ingredients})
+      body: JSON.stringify({ingredients: ingredientsArr})
     })
       .then((res) => {
         if (!res.ok) {

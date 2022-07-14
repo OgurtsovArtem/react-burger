@@ -18,21 +18,26 @@ const FeedDetails: FC<IProfileOrderProps>= ({data}) => {
 
   const { id } = useParams<{ id: string }>();
   const currentData = useSelector((state) => getFeedId(state, id, data));
+  
   // Оставляем только уникальные значения в массиве
-  const uniqData = Array.from(new Set(currentData.ingredients));
+  const uniqData = Array.from(new Set(currentData?.ingredients));
 
   const images = useSelector((state) => getAllMobileImages(state, uniqData));
   const names = useSelector((state) => getAllNames(state, uniqData));
   const price = useSelector((state) => getAllPrice(state, uniqData));
-  const fullPrice = useSelector((state) => getFinalPrice(state, currentData.ingredients));
+  const fullPrice = useSelector((state) => currentData ? getFinalPrice(state, currentData?.ingredients) : null);
+  const RepetitionsNumbers = useSelector((state) => currentData ? getRepetitionsNumbers(state, currentData?.ingredients) : null);
 
-  const RepetitionsNumbers = useSelector((state) => getRepetitionsNumbers(state, currentData.ingredients));
-  const RepetitionsNumbersValue = Object.values(RepetitionsNumbers)
+  const RepetitionsNumbersValue = RepetitionsNumbers ? Object.values(RepetitionsNumbers) : [];
 
   const statusColor = 'pending' ? styles.status_wait : 'done' ? styles.status_done : styles.status_reject;
 
-  if (!currentData) {
+  if (!data) {
     return  <Loader size="medium" />;
+  }
+
+  if (!currentData) {
+    return <div className={`text text_type_main-large`}>Ингредиент не найден :(</div>
   }
 
   return (
