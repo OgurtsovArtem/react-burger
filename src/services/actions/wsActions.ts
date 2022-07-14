@@ -7,7 +7,6 @@ import {
   WS_CONNECTION_CLOSED,
   WS_USER_CONNECTION_CLOSED,
   WS_GET_ALL_ORDERS,
-  WS_SEND_MESSAGE,
 } from '../action-types';
 
 export interface  wsConnectionStart {
@@ -38,11 +37,18 @@ export interface wsGetAllOrders{
     readonly payload: IOrders<IOrder>;
 };
 
-export interface wsSendMessage  {
-    readonly type: typeof WS_SEND_MESSAGE;
-};
 
+export const WsConnectionStart = (): wsConnectionStart => ({
+  type: WS_CONNECTION_START,
+});
 
+export const WsConnectionUserStart = (): wsConnectionUserStart => ({
+  type: WS_CONNECTION_USER_START,
+});
+
+export const WsConnectionClose = (): wsConnectionClosed => ({
+  type: WS_CONNECTION_CLOSED,
+});
 
 export type TWsActions = 
     | wsConnectionStart
@@ -51,5 +57,4 @@ export type TWsActions =
     | wsConnectionError
     | wsConnectionClosed
     | wsUserConnectionClosed
-    | wsGetAllOrders
-    | wsSendMessage;
+    | wsGetAllOrders;
