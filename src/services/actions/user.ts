@@ -70,6 +70,7 @@ export function signIn(formData: IFormDataTypes) {
       });
   };
 }
+
 export function signOut() {
   return function (dispatch: AppDispatch) {
     logout().then((data) => {

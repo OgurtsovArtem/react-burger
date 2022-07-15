@@ -1,7 +1,6 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, Key } from 'react';
 import styles from './OrderCard.module.css';
-
 import img from '../../icons/logo_mobile.svg'
 import { Link, useLocation } from 'react-router-dom';
 import { formatDate } from '../../utils/time';
