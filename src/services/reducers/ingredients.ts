@@ -1,3 +1,5 @@
+import { IIngredientsPropTypes } from "../../utils/types";
+import { TIngredientsActions } from "../actions/ingredients";
 import {
   GET_ALL_INGREDIENTS_REQUEST,
   GET_ALL_INGREDIENTS_FAILED,
@@ -12,7 +14,18 @@ import {
   CHANGE_ITEM,
 } from "../actions/ingredients";
 
-const initialState = {
+
+type TIngredientsState = {
+  allIngredients: IIngredientsPropTypes[];
+  allIngredientsRequest: boolean;
+  allIngredientsFailed: boolean;
+
+  addedIngredients: IIngredientsPropTypes[];
+  detailIngredients: IIngredientsPropTypes | null | undefined;
+  bun : IIngredientsPropTypes[];
+} 
+
+const initialState: TIngredientsState = {
   allIngredients: [],
   allIngredientsRequest: false,
   allIngredientsFailed: false,
@@ -22,7 +35,7 @@ const initialState = {
   bun: [],
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
   switch (action.type) {
     case GET_ALL_INGREDIENTS_REQUEST: {
       return {
@@ -48,13 +61,13 @@ export const ingredientsReducer = (state = initialState, action) => {
     case SET_DETAIL_INGREDIENTS: {
       return {
         ...state,
-        detailIngredients: [...state.allIngredients].find((item) => item._id === action._id),
+        detailIngredients:  [...state.allIngredients ].find((item) => item._id === action._id) ,
       };
     }
     case DELETE_DETAIL_INGREDIENTS: {
       return {
         ...state,
-        detailIngredients: {},
+        detailIngredients: null,
       };
     }
 
@@ -85,12 +98,12 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         addedIngredients: [
           ...state.addedIngredients,
-          ...state.allIngredients
-            .map((item) => {
+          ...state.allIngredients 
+            .map((item):any => {
               if (item._id === action.id) {
                 return { ...item, order: action.index, uniqId: action.uniqId };
               }
-              return false;
+              return false
             })
             .filter((item) => item !== false),
         ],
@@ -100,7 +113,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         addedIngredients: state.addedIngredients
-          .map((item) => {
+          .map((item: IIngredientsPropTypes) => {
             if (item.uniqId === action.dragId) {
               return { ...item, order: action.hoverIndex };
             }
@@ -109,7 +122,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
             return item;
           })
-          .sort((prev, next) => (prev.order > next.order ? 1 : -1)),
+          .sort((prev: {order: number}, next: {order: number}) => (prev.order > next.order ? 1 : -1)),
       };
     }
 
@@ -119,7 +132,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         bun: [...state.allIngredients.filter((item) => item._id === action.id)],
         allIngredients: state.allIngredients.map((item) => {
           if (item.type === "bun") {
-            return item._id === action.id ? { ...item, qty: 2 } : { ...item, qty: null };
+            return item._id === action.id ? { ...item, qty: 2 } : { ...item, qty: 0 };
           }
           return item;
         }),

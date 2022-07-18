@@ -7,7 +7,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DELETE_ITEM, DECREASE_ITEM, CHANGE_ITEM } from "../../services/actions/ingredients";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import BasketCardStyle from "./BasketCard.module.css";
 import { IIngredientsPropTypes } from "../../utils/types";
 import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";

@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import { CLEAR_ORDER, getOrder } from "../../services/actions/constructor";
 import { Loader } from "../Loader/Loader";
 import icon from "../../icons/done_popup.svg";
@@ -10,11 +10,17 @@ interface IOrderDetailsProps {
 }
 
 const OrderDetails: FC<IOrderDetailsProps> = ({ popupStatus }) => {
-  const { orderStatus, orderLoader } = useSelector((state: any) => state.constructorBurger);
-  const dispatch: any = useDispatch();
+  const { orderStatus, orderLoader } = useSelector((state) => state.constructorBurger);
+  const { addedIngredients, bun } = useSelector((store) => store.ingredients);
+
+  const ingredients: string[] = addedIngredients.map((item: { _id: string; }) => item._id);
+  const buns: string[] = bun.map((item: { _id: string; }) => item._id);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (popupStatus) {
-      dispatch(getOrder());
+    if (popupStatus && ingredients) {
+      dispatch(getOrder([...buns, ...ingredients, ...buns,]));
     }
     return () => {
       dispatch({ type: CLEAR_ORDER });
@@ -28,7 +34,7 @@ const OrderDetails: FC<IOrderDetailsProps> = ({ popupStatus }) => {
       ) : (
         <div className={OrderDetailsStyle.body}>
           <h2 className={`${OrderDetailsStyle.number} text text_type_digits-large`}>
-            {orderStatus.order.number}
+            #{orderStatus.order.number}
           </h2>
           <h3 className="text text_type_main-default mt-8">идентификатор заказа</h3>
           <img className={`${OrderDetailsStyle.icon} mt-15`} src={icon} alt="done" />

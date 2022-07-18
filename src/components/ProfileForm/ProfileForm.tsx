@@ -1,7 +1,7 @@
 import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
 import style from "./ProfileForm.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { update } from "../../services/actions/user";
 import { Loader } from "../Loader/Loader";
 
@@ -11,17 +11,17 @@ interface IEditState {
   password: boolean;
 }
 interface IFormDataState {
-  name: string;
-  email: string;
+  name: any;
+  email: any;
   password: string;
 }
 
 function ProfileForm() {
-  const { data, sending } = useSelector((state: any) => state.user);
+  const { data, sending } = useSelector((state) => state.user);
 
   const initialState: IFormDataState = {
-    name: data.name || data.user.name,
-    email: data.email || data.user.email,
+    name: data?.name || data?.user?.name,
+    email: data?.email || data?.user?.email,
     password: "",
   };
   const initialEditState: IEditState = {
@@ -37,7 +37,7 @@ function ProfileForm() {
   const inputLoginRef = React.useRef<HTMLInputElement>(null);
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (formRef.current) {

@@ -17,14 +17,17 @@ import {
   Ingredient,
 } from "../../pages";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { checkUserAuth } from "../../services/actions/user";
 import { getIngredients } from "../../services/actions/ingredients";
+import OrderFeed from "../../pages/OrderFeed/OrderFeed";
+import Order from "../../pages/Order/Order";
+import FeedModal from "../FeedModal/FeedModal";
 
 function App() {
   const history = useHistory();
   const location = useLocation<{ background: Location }>();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -59,6 +62,15 @@ function App() {
         <ProtectedRoute path="/profile/orders" exact>
           <ProfileOrders />
         </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders/:id" exact>
+          <Order />
+        </ProtectedRoute>
+        <Route path="/orders" exact>
+          <OrderFeed />
+        </Route>
+        <Route path="/feed/:id" exact>
+          <Order />
+        </Route>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
         </Route>
@@ -67,15 +79,34 @@ function App() {
         </Route>
       </Switch>
       {background && (
-        <Route
-          path="/ingredients/:id"
+        <>
+          <Route
+            path="/ingredients/:id"
+            children={
+              <Modal onClose={handleModalClose} header={"Детали ингредиента"}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+          path="/feed/:id"
           children={
-            <Modal onClose={handleModalClose} header={"Детали ингредиента"}>
-              <IngredientDetails />
+            <Modal onClose={handleModalClose} header={"#231455"}>
+              <FeedModal />
             </Modal>
           }
-        />
+          />
+          <Route
+          path="/profile/orders/:id"
+          children={
+            <Modal onClose={handleModalClose} header={"#231455"}>
+              <FeedModal />
+            </Modal>
+          }
+          />
+        </>
       )}
+
     </>
   );
 }

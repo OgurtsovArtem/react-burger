@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { formValidator } from "../../utils/formValidator";
 import { signIn } from "../../services/actions/user";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 
 function Login() {
   const [formData, setFormData] = React.useState({
@@ -19,7 +19,7 @@ function Login() {
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Object.values(formErrors).every((item) => item)

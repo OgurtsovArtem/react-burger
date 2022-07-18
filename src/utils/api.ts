@@ -1,4 +1,5 @@
 import { MAIN_URL } from "./rootConstants";
+import { IFormDataTypes } from "./types";
 import { getCookie, setCookie } from "./utils";
 
 const checkResponse = async (res: Response) => {
@@ -43,7 +44,7 @@ export const fetchWithRefresh = async (
   }
 };
 
-export const forgotPassword = (data: { email: string }) => {
+export const forgotPassword = (data: IFormDataTypes) => {
   return fetchWithRefresh(`${MAIN_URL}/password-reset`, {
     method: "POST",
     headers: {
@@ -53,7 +54,7 @@ export const forgotPassword = (data: { email: string }) => {
   });
 };
 
-export const resetPassword = (data: { token: string; password: string }) => {
+export const resetPassword = (data: IFormDataTypes) => {
   return fetchWithRefresh(`${MAIN_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -63,7 +64,7 @@ export const resetPassword = (data: { token: string; password: string }) => {
   });
 };
 
-export const registerUser = (data: { name: string; email: string; password: string }) => {
+export const registerUser = (data: IFormDataTypes) => {
   return fetch(`${MAIN_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -84,7 +85,7 @@ export const getUser = () => {
   });
 };
 
-export const updateUser = (data: {  email: string; }) => {
+export const updateUser = (data: IFormDataTypes) => {
   return fetchWithRefresh(`${MAIN_URL}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -95,7 +96,7 @@ export const updateUser = (data: {  email: string; }) => {
   });
 };
 
-export const login = (data: { name: string; password: string  }) => {
+export const login = (data: IFormDataTypes) => {
   return fetch(`${MAIN_URL}/auth/login`, {
     method: "POST",
     headers: {

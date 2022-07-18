@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../services/hooks";
 import { Redirect, Route, useLocation, RouteProps } from "react-router-dom";
 import { Loader } from "./Loader/Loader";
 
@@ -7,8 +7,9 @@ type TProtectedRoute = {
 } & RouteProps;
 
 export function ProtectedRoute({ onlyUnAuth = false, ...rest }: TProtectedRoute) {
-  const { sending, data } = useSelector((store: any) => store.user);
+  const { sending, data } = useSelector((store) => store.user);
   const location = useLocation<{ from: Location }>();
+
   if (sending) {
     return <Loader size="large" />;
   }
