@@ -5,7 +5,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import { useSelector, useDispatch } from "../../services/hooks";
-import { ADD_ITEM, INCREASE_ITEM, ADD_BUN } from "../../services/actions/ingredients";
 import BasketCard from "../BasketCard/BasketCard";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
@@ -14,6 +13,7 @@ import { IIngredientsPropTypes } from "../../utils/types";
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router";
+import { ADD_ITEM, INCREASE_ITEM, ADD_BUN } from "../../services/action-types";
 
 declare module "react" {
   interface FunctionComponent<P = {}> {

@@ -1,10 +1,4 @@
-import {
-  GET_ORDER_REQUEST,
-  GET_ORDER_FAILED,
-  GET_ORDER_SUCCESS,
-  CLEAR_ORDER
-} from '../actions/constructor';
-
+import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER } from '../action-types';
 import { TConstructorActions } from '../actions/constructor';
 
 type TConstructorListState = {
@@ -14,7 +8,7 @@ type TConstructorListState = {
   orderFailed: boolean;
 } 
 
-const initialState: TConstructorListState = {
+export const initialState: TConstructorListState = {
   orderStatus: {},
   orderRequest: true,
   orderLoader: true,
