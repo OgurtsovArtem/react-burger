@@ -27,7 +27,7 @@ const IngredientsCard: FC<IIngredientsCardProps> = ({ data }) => {
   };
   return (
     <Link to={{ pathname: `/ingredients/${data._id}`, state: { background: location } }}>
-      <div ref={dragRef} className={IngredientsCardStyle.card} onClick={changePopupStatus}>
+      <div data-cy-test='ingredient' ref={dragRef} className={IngredientsCardStyle.card} onClick={changePopupStatus}>
         {data?.qty ? <Counter count={data.qty} size="default" /> : null}
 
         <picture>

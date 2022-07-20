@@ -2,7 +2,7 @@ import { initialState, constructorBurgerReducer } from './constructor';
 import { order } from "../../utils/mock";
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER } from '../action-types';
 
-describe('User', () => {
+describe('Constructor reducer', () => {
 
   it('Проверка начального состояния', () => {
       const result = constructorBurgerReducer(initialState, {});

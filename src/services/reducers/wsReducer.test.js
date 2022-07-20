@@ -7,7 +7,7 @@ import {
   WS_GET_ALL_ORDERS
 } from '../action-types';
 
-describe('User', () => {
+describe('wsReducer  reducer', () => {
 
   it('Проверка начального состояния', () => {
       const result = wsReducer(initialState, {});

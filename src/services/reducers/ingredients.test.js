@@ -14,7 +14,7 @@ import {
 } from "../action-types";
 
 const state = {...initialState, allIngredients: [ingredient], addedIngredients: [ingredient] }
-describe('User', () => {
+describe('Ingredients reducer', () => {
 
   it('Проверка начального состояния', () => {
       const result = ingredientsReducer(state, {});

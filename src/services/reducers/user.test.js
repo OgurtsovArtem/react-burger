@@ -17,7 +17,7 @@ import {
   UPDATE_USER_SUCCESS
 } from '../action-types'
 
-describe('User', () => {
+describe('User  reducer', () => {
 
     it('Проверка начального состояния', () => {
         const result = userReducer(initialState, {});

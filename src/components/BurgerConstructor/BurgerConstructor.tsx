@@ -118,7 +118,7 @@ function BurgerConstructor() {
           </div>
           {bun[0] ? <BasketCard data={bun[0]} isLocked={true} type="top" index={1} /> : null}
 
-          <div ref={drop} className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`}>
+          <div ref={drop} className={`${BurgerConstructorStyle.body} pl-4 pr-4  custom-scrollbar`} data-cy-test="ingredient-in-constructor">
             {addedIngredients.map((object: IIngredientsPropTypes, index: number) => (
               <BasketCard
                 key={object.uniqId}
