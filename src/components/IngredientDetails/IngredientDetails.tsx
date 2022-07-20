@@ -2,8 +2,8 @@ import IngredientDetailsStyle from "./IngredientDetails.module.css";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { useParams } from "react-router";
 import { useEffect } from "react";
-import { SET_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
 import { Loader } from "../Loader/Loader";
+import { SET_DETAIL_INGREDIENTS } from "../../services/action-types/ingredientsActionTypes";
 
 function IngredientDetails() {
   const { detailIngredients, allIngredientsRequest, allIngredients } = useSelector(

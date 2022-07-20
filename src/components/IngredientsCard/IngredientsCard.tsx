@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import IngredientsCardStyle from "./IngredientsCard.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "../../services/hooks";
-import { DELETE_DETAIL_INGREDIENTS } from "../../services/actions/ingredients";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { IIngredientsPropTypes } from "../../utils/types";
+import { DELETE_DETAIL_INGREDIENTS } from "../../services/action-types/ingredientsActionTypes";
 
 interface IIngredientsCardProps {
   data: IIngredientsPropTypes;
@@ -27,7 +27,7 @@ const IngredientsCard: FC<IIngredientsCardProps> = ({ data }) => {
   };
   return (
     <Link to={{ pathname: `/ingredients/${data._id}`, state: { background: location } }}>
-      <div ref={dragRef} className={IngredientsCardStyle.card} onClick={changePopupStatus}>
+      <div data-cy-test='ingredient' ref={dragRef} className={IngredientsCardStyle.card} onClick={changePopupStatus}>
         {data?.qty ? <Counter count={data.qty} size="default" /> : null}
 
         <picture>

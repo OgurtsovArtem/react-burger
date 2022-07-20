@@ -13,7 +13,7 @@ type TWsState = {
   data:  IOrders<IOrder> | null,
 }
 
-const initialState: TWsState = {
+export const initialState: TWsState = {
   wsConnected: false,
   data: null,
 };

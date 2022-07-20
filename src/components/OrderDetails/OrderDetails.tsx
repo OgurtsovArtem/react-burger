@@ -1,9 +1,10 @@
 import { FC, useEffect } from "react";
 import { useSelector, useDispatch } from "../../services/hooks";
-import { CLEAR_ORDER, getOrder } from "../../services/actions/constructor";
+import { getOrder } from "../../services/actions/constructor";
 import { Loader } from "../Loader/Loader";
 import icon from "../../icons/done_popup.svg";
 import OrderDetailsStyle from "./OrderDetails.module.css";
+import { CLEAR_ORDER } from "../../services/action-types/constructorActionTypes";
 
 interface IOrderDetailsProps {
   popupStatus: boolean;

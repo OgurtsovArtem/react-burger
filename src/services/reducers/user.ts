@@ -1,26 +1,21 @@
 import { IUserTypes } from '../../utils/types';
-import {
-  AUTH_CHECKED,
-  USER_LOGOUT,
-
-  LOGIN_USER_REQUEST,
-  LOGIN_USER_FAILED,
-  LOGIN_USER_SUCCESS,
-
-  REGISTER_USER_REQUEST,
-  REGISTER_USER_FAILED,
-  REGISTER_USER_SUCCESS,
-
-  GET_USER_REQUEST,
-  GET_USER_FAILED,
-  GET_USER_SUCCESS,
-
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_FAILED,
-  UPDATE_USER_SUCCESS,
-  TUserActions,
-} from '../actions/user';
-
+import {  TUserActions } from '../actions/user';
+import { 
+  AUTH_CHECKED, 
+  USER_LOGOUT, 
+  LOGIN_USER_REQUEST, 
+  LOGIN_USER_FAILED, 
+  LOGIN_USER_SUCCESS, 
+  REGISTER_USER_REQUEST, 
+  REGISTER_USER_FAILED, 
+  REGISTER_USER_SUCCESS, 
+  GET_USER_REQUEST, 
+  GET_USER_FAILED, 
+  GET_USER_SUCCESS, 
+  UPDATE_USER_REQUEST, 
+  UPDATE_USER_FAILED, 
+  UPDATE_USER_SUCCESS
+ } from '../action-types';
 
 type TUserState = {
   isAuthCheck: boolean,
@@ -42,7 +37,7 @@ type TUserState = {
   updateUserRequest: boolean,
 } 
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthCheck: false,
 
   sending: false,
