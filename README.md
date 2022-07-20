@@ -6,7 +6,7 @@
 
 ### Ссылки на проект
 
-[Gh-Page](./).
+[Gh-Page](https://OgurtsovArtem.github.io/react-burger).
 
 [Яндекс.Облако](./).
 
