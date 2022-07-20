@@ -8,7 +8,7 @@
 
 [Gh-Page](https://OgurtsovArtem.github.io/react-burger).
 
-[Яндекс.Облако](./).
+[Яндекс.Облако](./) - еще не выдали грант.
 
 ## Статус проекта
 
