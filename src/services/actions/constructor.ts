@@ -1,11 +1,7 @@
 import { MAIN_URL } from '../../utils/rootConstants';
 import { AppDispatch, IIngredientsPropTypes } from '../../utils/types';
 import { getCookie } from '../../utils/utils';
-
-export const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
-export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
-export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
-export const CLEAR_ORDER: 'CLEAR_ORDER' = 'CLEAR_ORDER';
+import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER } from '../action-types';
 
 export function getOrder(ingredientsArr: string[]): any {
   const token = getCookie('accessToken');

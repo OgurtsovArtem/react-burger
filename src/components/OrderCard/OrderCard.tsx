@@ -16,9 +16,9 @@ interface IProfileOrderProps {
 const OrderCard: FC<IProfileOrderProps> = ({data, pathname}) => {
 
   const location = useLocation();
-  const {createdAt, ingredients,name, number, status, _id} = data;
-  const images = useSelector((state) => getAllMobileImages(state, ingredients));
-  const price = useSelector((state) => getFinalPrice(state, ingredients));
+  const {createdAt, ingredients, name, number, status, _id} = data;
+  const images = useSelector((state) => ingredients ? getAllMobileImages(state, ingredients) : []);
+  const price = useSelector((state) => ingredients ? getFinalPrice(state, ingredients) : 0);
 
   const statusColor = 'pending' === status ? styles.status_wait : 'done' === status ? styles.status_done : styles.status_reject;
   const statusText = 'pending' === status ? "Готовится" : 'done' === status ? "Выполнен" : "Отменён";
@@ -46,7 +46,7 @@ const OrderCard: FC<IProfileOrderProps> = ({data, pathname}) => {
             })}
           </div>
           <div className={styles.price}>
-            <span className={`${styles.value} text text_type_digits-default`}>{price}</span>
+            <span className={`${styles.value} text text_type_digits-default`}>{price || `??`}</span>
             <CurrencyIcon type="primary" />
           </div>
         </div>

@@ -1,18 +1,19 @@
 import { IIngredientsPropTypes } from "../../utils/types";
 import { TIngredientsActions } from "../actions/ingredients";
-import {
-  GET_ALL_INGREDIENTS_REQUEST,
-  GET_ALL_INGREDIENTS_FAILED,
-  GET_ALL_INGREDIENTS_SUCCESS,
-  SET_DETAIL_INGREDIENTS,
-  DELETE_DETAIL_INGREDIENTS,
-  ADD_ITEM,
-  DELETE_ITEM,
-  DECREASE_ITEM,
-  INCREASE_ITEM,
-  ADD_BUN,
-  CHANGE_ITEM,
-} from "../actions/ingredients";
+import { 
+  GET_ALL_INGREDIENTS_REQUEST, 
+  GET_ALL_INGREDIENTS_SUCCESS, 
+  GET_ALL_INGREDIENTS_FAILED, 
+  SET_DETAIL_INGREDIENTS, 
+  DELETE_DETAIL_INGREDIENTS, 
+  DECREASE_ITEM, 
+  INCREASE_ITEM, 
+  DELETE_ITEM, 
+  ADD_ITEM, 
+  CHANGE_ITEM, 
+  ADD_BUN 
+} from "../action-types";
+
 
 
 type TIngredientsState = {
@@ -25,7 +26,7 @@ type TIngredientsState = {
   bun : IIngredientsPropTypes[];
 } 
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   allIngredients: [],
   allIngredientsRequest: false,
   allIngredientsFailed: false,

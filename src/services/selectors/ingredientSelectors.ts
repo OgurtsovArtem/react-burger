@@ -9,19 +9,19 @@ export const getFeedId = (state: RootState, id: string | null, orders:IOrder[]):
 }
 
 export const getAllMobileImages = (state: RootState, ingredients: string[]): string[] => {
-  return ingredients.map((item: string) => getIngredientId(state, item).image_mobile)
+  return ingredients.map((item: string) => getIngredientId(state, item)?.image_mobile)
 }
 export const getAllNames = (state: RootState, ingredients: string[]): string[] => {
-  return ingredients.map((item: string) => getIngredientId(state, item).name)
+  return ingredients.map((item: string) => getIngredientId(state, item)?.name)
 }
 export const getAllPrice = (state: RootState, ingredients: string[]): number[] => {
-  return ingredients.map((item: string) => getIngredientId(state, item).price)
+  return ingredients.map((item: string) => getIngredientId(state, item)?.price)
 }
 export const getAllId = (state: RootState, ingredients: string[]): string[] => {
-  return ingredients.map((item: string) => getIngredientId(state, item)._id)
+  return ingredients.map((item: string) => getIngredientId(state, item)?._id)
 }
 export const getFinalPrice = (state: RootState, ingredients: string[]): number => {
-  return ingredients.reduce((prev: number, next: string) => prev + getIngredientId(state, next).price, 0)
+  return ingredients.reduce((prev: number, next: string) => prev + getIngredientId(state, next)?.price, 0)
 }
 export const getRepetitionsNumbers = (state: RootState, ingredients: string[]): string[] => {
   return getAllId(state, ingredients).reduce((acc: any, el:string) => { acc[el] = (acc[el] || 0) + 1; return acc; }, {})
